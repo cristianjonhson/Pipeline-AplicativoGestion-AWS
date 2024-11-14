@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Inscripciones</title>
+     <!-- Bootstrap CSS -->
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+     <link rel="stylesheet" th:href="@{/styles/style.css}">
+     <!-- FontAwesome CSS -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ </head>
+
+<body>
+    <!-- Menú de Navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#" th:href="@{/}">
+            <i class="fas fa-calendar"></i> Gestión de Eventos
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" th:href="@{/}"><i class="fas fa-home"></i> Inicio <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Servicios
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#" th:href="@{/evento/lista}">Gestionar Eventos</a>
+                        <a class="dropdown-item" href="#" th:href="@{/calendario}">Ver Calendario</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/about}"><i class="fas fa-info-circle"></i> Acerca de</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/contact}"><i class="fas fa-envelope"></i> Contacto</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <div class="container my-4">
+            <h2 class="my-4">Lista de Inscripciones</h2>
+
+            <!-- Tabla de inscripciones -->
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre del Participante</th>
+                        <th>Nombre del Evento</th>
+                        <th>Fecha Inscripción</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="inscripcion : ${inscripcionList}">
+                        <td th:text="${inscripcion.id}"></td>
+                        <td th:text="${inscripcion.participante}"></td>
+                        <td th:text="${inscripcion.tituloEvento}"></td>
+                        <td th:text="${#temporals.format(inscripcion.fechaInscripcion,'dd/MM/YYYY HH:mm')}"></td>
+                        <td>
+                            <a th:href="@{/inscripciones/editar/{id}(id=${inscripcion.id})}" class="btn btn-warning">
+                                <i class="fas fa-edit"></i> Editar
+                            </a>
+                            <button type="button" class="btn btn-danger"
+                                th:onclick="'confirmDelete(' + ${inscripcion.id} + ')'">
+                                <i class="fas fa-trash-alt"></i> Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a href="/inscripciones/nueva" class="btn btn-success">
+                <i class="fas fa-plus"></i> Agregar Nueva Inscripción
+            </a>
+            <a href="/" class="btn btn-primary">
+                <i class="fas fa-home"></i> Volver al inicio
+            </a>
+        </div>
+    </main>
+    <footer class="mt-5">
+        <div class="container">
+            <p>&copy; 2024 American Summer. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    <!-- Script para manejar confirmación de eliminación -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            window.confirmDelete = function (id) {
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "Esta acción eliminará la inscripción permanentemente.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        fetch(`/inscripciones/eliminar/${id}`, { method: 'GET' })
+                            .then(response => {
+                                if (response.ok) {
+                                    Swal.fire({
+                                        title: '¡Éxito!',
+                                        text: 'La inscripción ha sido eliminada correctamente.',
+                                        icon: 'success',
+                                        confirmButtonText: 'Ok'
+                                    }).then(() => {
+                                        window.location.href = "/inscripciones/lista";
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'Error',
+                                        text: 'Hubo un problema al eliminar la inscripción.',
+                                        icon: 'error',
+                                        confirmButtonText: 'Intentar nuevamente'
+                                    });
+                                }
+                            })
+                            .catch(() => {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'No se pudo eliminar la inscripción.',
+                                    icon: 'error',
+                                    confirmButtonText: 'Intentar nuevamente'
+                                });
+                            });
+                    }
+                });
+            };
+        });
+    </script>
+
+    <!-- Bootstrap JS y dependencias -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

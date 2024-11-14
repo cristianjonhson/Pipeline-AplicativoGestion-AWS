@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Usuarios</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/styles/style.css}">
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <!-- Menú de Navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#" th:href="@{/}">
+            <i class="fas fa-calendar"></i> Gestión de Eventos
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" th:href="@{/}"><i class="fas fa-home"></i> Inicio <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Servicios
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#" th:href="@{/evento/lista}">Gestionar Eventos</a>
+                        <a class="dropdown-item" href="#" th:href="@{/calendario}">Ver Calendario</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/about}"><i class="fas fa-info-circle"></i> Acerca de</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/contact}"><i class="fas fa-envelope"></i> Contacto</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <div class="container mt-8">
+            <h2 class="my-4">Lista de Usuarios</h2>
+
+            <!-- Tabla de usuarios -->
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Email</th>
+                        <!-- <th>Contraseña</th> -->
+                        <th>Fecha de Registro</th>
+                        <th>Rol</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="usuario : ${usuarios}">
+                        <td th:text="${usuario.id}"></td>
+                        <td th:text="${usuario.nombre}"></td>
+                        <td th:text="${usuario.apellido}"></td>
+                        <td th:text="${usuario.email}"></td>
+                        <!-- <td th:text="${usuario.contrasena}"></td> -->
+                        <td th:text="${#temporals.format(usuario.fechaRegistro,'dd/MM/YYYY HH:mm')}"></td>
+                        <td th:text="${usuario.rol}"></td>
+                        <td>
+                            <div class="d-flex">
+                                <a th:href="@{/usuarios/editar/{id}(id=${usuario.id})}"
+                                    class="btn btn-warning me-2 d-flex align-items-center">
+                                    <i class="fas fa-edit me-1"></i> Editar
+                                </a>
+                                <button type="button" class="btn btn-danger d-flex align-items-center"
+                                    th:onclick="'confirmDelete(' + ${usuario.id} + ')'">
+                                    <i class="fas fa-trash-alt me-1"></i> Eliminar
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a href="/usuarios/nuevo" id="newUser" class="btn btn-success">
+                <i class="fas fa-plus"></i> Agregar Nuevo Usuario
+            </a>
+            <a href="/" class="btn btn-primary">
+                <i class="fas fa-home"></i> Volver al inicio
+            </a>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 American Summer. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Confirmación para eliminar el usuario
+        window.confirmDelete = function (id) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "Esta acción eliminará al usuario permanentemente.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`/usuarios/eliminar/${id}`, { method: 'GET' })
+                        .then(response => {
+                            if (response.ok) {
+                                Swal.fire({
+                                    title: '¡Éxito!',
+                                    text: 'El usuario ha sido eliminado correctamente.',
+                                    icon: 'success',
+                                    confirmButtonText: 'Ok'
+                                }).then(() => {
+                                    window.location.href = "/usuarios/lista";
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Hubo un problema al eliminar el usuario.',
+                                    icon: 'error',
+                                    confirmButtonText: 'Intentar nuevamente'
+                                });
+                            }
+                        })
+                        .catch(() => {
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'No se pudo eliminar el usuario.',
+                                icon: 'error',
+                                confirmButtonText: 'Intentar nuevamente'
+                            });
+                        });
+                }
+            });
+        };
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

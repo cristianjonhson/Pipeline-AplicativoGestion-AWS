@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Categorías</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/styles/style.css}">
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <!-- Menú de Navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#" th:href="@{/}">
+            <i class="fas fa-calendar"></i> Gestión de Eventos
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" th:href="@{/}"><i class="fas fa-home"></i> Inicio <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Servicios
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#" th:href="@{/evento/lista}">Gestionar Eventos</a>
+                        <a class="dropdown-item" href="#" th:href="@{/calendario}">Ver Calendario</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/about}"><i class="fas fa-info-circle"></i> Acerca de</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/contact}"><i class="fas fa-envelope"></i> Contacto</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <div class="container mt-8">
+        <h2 class="my-4">Lista de Categorías</h2>
+
+        <!-- Tabla de categorías -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="categoria : ${categorias}">
+                    <td th:text="${categoria.id}"></td>
+                    <td th:text="${categoria.nombre}"></td>
+                    <td>
+                        <a th:href="@{/categoria/editar/{id}(id=${categoria.id})}" class="btn btn-warning">
+                            <i class="fas fa-edit"></i> Editar
+                        </a>
+                        <!-- Botón para eliminar con confirmación -->
+                        <button type="button" class="btn btn-danger"
+                            th:onclick="'confirmDelete(' + ${categoria.id} + ')'">
+                            <i class="fas fa-trash-alt"></i> Eliminar
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a href="/categorias/nueva" id="newCategory" class="btn btn-success">
+            <i class="fas fa-plus"></i> Agregar Nueva Categoría
+        </a>
+        <a href="/" class="btn btn-primary">
+            <i class="fas fa-home"></i> Volver al inicio
+        </a>
+    </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 American Summer. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS y dependencias -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+    <!-- Script para manejar la confirmación y éxito -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Confirmación para eliminar la categoría
+            window.confirmDelete = function (id) {
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "Esta acción eliminará la categoría permanentemente.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Realizar la solicitud GET usando fetch
+                        fetch(`/categoria/eliminar/${id}`, { method: 'GET' })
+                            .then(response => {
+                                if (response.ok) {
+                                    Swal.fire({
+                                        title: '¡Éxito!',
+                                        text: 'La categoría ha sido eliminada correctamente.',
+                                        icon: 'success',
+                                        confirmButtonText: 'Ok'
+                                    }).then(() => {
+                                        window.location.href = "/categoria/lista"; // Redirigir a la lista de categorías
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'Error',
+                                        text: 'Hubo un problema al eliminar la categoría.',
+                                        icon: 'error',
+                                        confirmButtonText: 'Intentar nuevamente'
+                                    });
+                                }
+                            })
+                            .catch(() => {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'No se pudo eliminar la categoría.',
+                                    icon: 'error',
+                                    confirmButtonText: 'Intentar nuevamente'
+                                });
+                            });
+                    }
+                });
+            }
+
+            // Mostrar mensajes de éxito o error en las operaciones
+            const urlParams = new URLSearchParams(window.location.search);
+            const successMessage = urlParams.get('success') === 'true' ? 'La categoría ha sido actualizada correctamente.' : null;
+            const deleteMessage = urlParams.get('deleted') === 'true' ? 'La categoría ha sido eliminada correctamente.' : null;
+            const errorMessage = urlParams.get('error') === 'true' ? 'Hubo un problema en la operación.' : null;
+
+            if (successMessage) {
+                Swal.fire({
+                    title: '¡Éxito!',
+                    text: successMessage,
+                    icon: 'success',
+                    confirmButtonText: 'Ok'
+                });
+            }
+            if (deleteMessage) {
+                Swal.fire({
+                    title: '¡Éxito!',
+                    text: deleteMessage,
+                    icon: 'success',
+                    confirmButtonText: 'Ok'
+                });
+            }
+            if (errorMessage) {
+                Swal.fire({
+                    title: 'Error',
+                    text: errorMessage,
+                    icon: 'error',
+                    confirmButtonText: 'Intentar nuevamente'
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,2774 @@
+{
+	"info": {
+		"_postman_id": "cc047ea0-73d7-49da-a8a8-f4129ca87231",
+		"name": "api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9248087"
+	},
+	"item": [
+		{
+			"name": "Categoría",
+			"item": [
+				{
+					"name": "categorias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/categorias",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"categorias"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "categorias",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/categorias",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"categorias"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 Aug 2024 03:56:00 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"nombre\": \"Verano Familiar\"\n    },\n    {\n        \"id\": 2,\n        \"nombre\": \"Programación\"\n    },\n    {\n        \"id\": 3,\n        \"nombre\": \"Música\"\n    },\n    {\n        \"id\": 4,\n        \"nombre\": \"Deportes\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/categorias/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"categorias",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "id=1",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/categorias/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"categorias",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 Aug 2024 03:56:58 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"nombre\": \"Verano Familiar\"\n}"
+						}
+					]
+				},
+				{
+					"name": "categorias",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Fondas\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/categorias",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"categorias"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201 Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"Cocina\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/categorias",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"categorias"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 20:10:05 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 5,\n    \"nombre\": \"Cocina\"\n}"
+						},
+						{
+							"name": "400 Bad Request-Valid-ErrorResponse",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/categorias",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"categorias"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 20:11:44 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"BAD_REQUEST\",\n    \"statusCode\": 400,\n    \"message\": \"{nombre=El nombre de la Categoría es requerido}\"\n}"
+						}
+					]
+				},
+				{
+					"name": "id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Cocina Chilena\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/categorias/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"categorias",
+								"5"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"Cocina Chilena\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/categorias/5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"categorias",
+										"5"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 20:13:32 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 5,\n    \"nombre\": \"Cocina Chilena\"\n}"
+						},
+						{
+							"name": "400 Bad Request-blank property",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/categorias/5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"categorias",
+										"5"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 20:14:32 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"BAD_REQUEST\",\n    \"statusCode\": 400,\n    \"message\": \"{nombre=El nombre de la Categoría es requerido}\"\n}"
+						},
+						{
+							"name": "404 Not Found-id=6",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"Cocina Italiana\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/categorias/6",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"categorias",
+										"6"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 20:15:26 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"NOT_FOUND\",\n    \"statusCode\": 404,\n    \"message\": \"No existe Categoría con: id=6\"\n}"
+						}
+					]
+				},
+				{
+					"name": "id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/categorias/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"categorias",
+								"7"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "204 No Content",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/categorias/6",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"categorias",
+										"6"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 20:17:59 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "404 Not Found-id=7",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/categorias/7",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"categorias",
+										"7"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 20:18:25 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"NOT_FOUND\",\n    \"statusCode\": 404,\n    \"message\": \"No existe Categoría con: id=7\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Ciudad",
+			"item": [
+				{
+					"name": "ciudades",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/ciudades",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ciudades"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "ciudades",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/ciudades",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"ciudades"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 Aug 2024 03:59:41 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"nombre\": \"Playa Central\"\n    },\n    {\n        \"id\": 2,\n        \"nombre\": \"Parque de la Ciudad\"\n    },\n    {\n        \"id\": 3,\n        \"nombre\": \"Sala de Conferencias\"\n    },\n    {\n        \"id\": 4,\n        \"nombre\": \"Polideportivo Municipal\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/ciudades/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ciudades",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "id=1",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/ciudades/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"ciudades",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 Aug 2024 04:02:59 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"nombre\": \"Playa Central\"\n}"
+						}
+					]
+				},
+				{
+					"name": "ciudades",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Santiago\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/ciudades",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ciudades"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201 Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"Santiago\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/ciudades",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"ciudades"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 20:31:01 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 5,\n    \"nombre\": \"Santiago\"\n}"
+						},
+						{
+							"name": "400 Bad Request-Valid-ErrorResponse",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/ciudades",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"ciudades"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 20:32:25 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"BAD_REQUEST\",\n    \"statusCode\": 400,\n    \"message\": \"{nombre=El nombre de la Ciudad es requerido}\"\n}"
+						}
+					]
+				},
+				{
+					"name": "id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Santiago-Macul\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/ciudades/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ciudades",
+								"5"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"Santiago-Macul\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/ciudades/5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"ciudades",
+										"5"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 20:34:17 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 5,\n    \"nombre\": \"Santiago-Macul\"\n}"
+						}
+					]
+				},
+				{
+					"name": "id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/ciudades/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ciudades",
+								"6"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "204 No Content",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/ciudades/6",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"ciudades",
+										"6"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 20:35:21 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Evento",
+			"item": [
+				{
+					"name": "eventos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/eventos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"eventos"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "eventos",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/eventos",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"eventos"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 Aug 2024 03:45:50 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"titulo\": \"Festival de Verano Familiar\",\n        \"descripcion\": \"Un día lleno de actividades familiares en la playa.\",\n        \"fechaInicio\": \"2024-08-01T10:00:00\",\n        \"fechaFin\": \"2024-08-01T18:00:00\",\n        \"ubicacion\": \"Playa Central\",\n        \"organizadorId\": 1,\n        \"categoriaId\": 1,\n        \"ciudadId\": 1,\n        \"valor\": 0,\n        \"imagenHtml\": \"<img src=\\\"festival_verano.jpg\\\" />\",\n        \"fechaCreacion\": \"2024-08-12T22:56:24.477926\"\n    },\n    {\n        \"id\": 2,\n        \"titulo\": \"Conferencia de Programación\",\n        \"descripcion\": \"Una conferencia sobre las últimas tendencias en programación.\",\n        \"fechaInicio\": \"2024-08-05T09:00:00\",\n        \"fechaFin\": \"2024-08-05T17:00:00\",\n        \"ubicacion\": \"Sala de Conferencias\",\n        \"organizadorId\": 1,\n        \"categoriaId\": 2,\n        \"ciudadId\": 3,\n        \"valor\": 0,\n        \"imagenHtml\": \"<img src=\\\"conf_programacion.jpg\\\" />\",\n        \"fechaCreacion\": \"2024-08-12T22:56:24.477926\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/eventos/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"eventos",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 OK-id=1",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/eventos/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"eventos",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 Aug 2024 03:53:07 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"titulo\": \"Festival de Verano Familiar\",\n    \"descripcion\": \"Un día lleno de actividades familiares en la playa.\",\n    \"fechaInicio\": \"2024-08-01T10:00:00\",\n    \"fechaFin\": \"2024-08-01T18:00:00\",\n    \"ubicacion\": \"Playa Central\",\n    \"organizadorId\": 1,\n    \"categoriaId\": 1,\n    \"ciudadId\": 1,\n    \"valor\": 0,\n    \"imagenHtml\": \"<img src=\\\"festival_verano.jpg\\\" />\",\n    \"fechaCreacion\": \"2024-08-12T22:56:24.477926\"\n}"
+						},
+						{
+							"name": "404 Not Found-id=3 sin handler exception",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/eventos/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"eventos",
+										"3"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 Aug 2024 04:36:54 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "404 Not Found-id=3 con handler",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/eventos/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"eventos",
+										"3"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 Aug 2024 04:39:45 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"NOT_FOUND\",\n    \"statusCode\": 404,\n    \"message\": \"No existe Evento con: id=3\"\n}"
+						}
+					]
+				},
+				{
+					"name": "eventos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"titulo\": \"Fiesta de la Cerveza Rubia\",\r\n\t\"descripcion\": \"Cervezas rubias de todo Chile.\",\r\n\t\"fechaInicio\": \"2024-08-09T15:00:00\",\r\n\t\"fechaFin\": \"2024-08-11T18:00:00\",\r\n\t\"ubicacion\": \"Parque Central\",\r\n\t\"organizadorId\": 1,\r\n\t\"categoriaId\": 1,\r\n\t\"ciudadId\": 4,\r\n\t\"valor\": 1000,\r\n\t\"imagenHtml\": \"<img src='festival_cerveza.jpg' />\",\r\n    \"fechaCreacion\": \"2024-08-08T15:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/eventos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"eventos"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201 Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"titulo\": \"Fiesta de la Cerveza Rubia\",\r\n\t\"descripcion\": \"Cervezas rubias de todo Chile.\",\r\n\t\"fechaInicio\": \"2024-08-09T15:00:00\",\r\n\t\"fechaFin\": \"2024-08-11T18:00:00\",\r\n\t\"ubicacion\": \"Parque Central\",\r\n\t\"organizadorId\": 1,\r\n\t\"categoriaId\": 1,\r\n\t\"ciudadId\": 4,\r\n\t\"valor\": 1000,\r\n\t\"imagenHtml\": \"<img src='festival_cerveza.jpg' />\",\r\n    \"fechaCreacion\": \"2024-08-08T15:00:00\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/eventos",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"eventos"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 06:48:51 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 5,\n    \"titulo\": \"Fiesta de la Cerveza Rubia\",\n    \"descripcion\": \"Cervezas rubias de todo Chile.\",\n    \"fechaInicio\": \"2024-08-09T15:00:00\",\n    \"fechaFin\": \"2024-08-11T18:00:00\",\n    \"ubicacion\": \"Parque Central\",\n    \"organizadorId\": 1,\n    \"categoriaId\": 1,\n    \"ciudadId\": 4,\n    \"valor\": 1000,\n    \"imagenHtml\": \"<img src='festival_cerveza.jpg' />\",\n    \"fechaCreacion\": \"2024-08-08T15:00:00\"\n}"
+						},
+						{
+							"name": "400 Bad Request-Valid-jsonResponse",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"titulo\": \"\",\r\n\t\"descripcion\": \"Cervezas negras de todo Chile.\",\r\n\t\"fecha_inicio\": \"2024-08-09 15:00:00\",\r\n\t\"fecha_fin\": \"2024-08-11 18:00:00\",\r\n\t\"ubicacion\": \"Parque Municipal\",\r\n\t\"organizador_id\": 1,\r\n\t\"categoria_id\": 1,\r\n\t\"ciudad_id\": 4,\r\n\t\"valor\": 1000,\r\n\t\"imagen_html\": \"<img src='festival_verano.jpg' />\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/eventos",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"eventos"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 04:45:36 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"fechaInicio\": \"La fechaInicio no debe ser nula\",\n    \"titulo\": \"El título del Evento es requerido\",\n    \"fechaCreacion\": \"La fechaCreacion no debe ser nula\",\n    \"fechaFin\": \"La fechaFin no debe ser nula\"\n}"
+						},
+						{
+							"name": "400 Bad Request-Valid-ErrorResponse",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"titulo\": \"\",\r\n\t\"descripcion\": \"Cervezas negras de todo Chile.\",\r\n\t\"fecha_inicio\": \"2024-08-09T15:00:00\",\r\n\t\"fecha_fin\": \"2024-08-11T18:00:00\",\r\n\t\"ubicacion\": \"Parque Municipal\",\r\n\t\"organizador_id\": 1,\r\n\t\"categoria_id\": 1,\r\n\t\"ciudad_id\": 4,\r\n\t\"valor\": 1000,\r\n\t\"imagen_html\": \"<img src='festival_verano.jpg' />\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/eventos",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"eventos"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 05:22:51 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"BAD_REQUEST\",\n    \"statusCode\": 400,\n    \"message\": \"{fechaInicio=La fechaInicio no debe ser nula, fechaCreacion=La fechaCreacion no debe ser nula, titulo=El título del Evento es requerido, fechaFin=La fechaFin no debe ser nula}\"\n}"
+						},
+						{
+							"name": "400 Bad Request-null property",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"titulo\": \"Fiesta de la Cerveza Negra\",\r\n\t\"descripcion\": \"Cervezas negras de todo Chile.\",\r\n\t\"fechaInicio\": \"2024-08-09T15:00:00\",\r\n\t\"fechaFin\": \"2024-08-11T18:00:00\",\r\n\t\"ubicacion\": \"Parque Municipal\",\r\n\t\"organizadorId\": 1,\r\n\t\"categoriaId\": 1,\r\n\t\"ciudadId\": null,\r\n\t\"valor\": 1000,\r\n\t\"imagen_html\": \"<img src='festival_verano.jpg' />\",\r\n    \"fechaCreacion\": \"2024-08-08T15:00:00\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/eventos",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"eventos"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 06:41:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"BAD_REQUEST\",\n    \"statusCode\": 400,\n    \"message\": \"org.hibernate.TransientPropertyValueException: Not-null property references a transient value - transient instance must be saved before current operation : cl.td.g2.eventos.model.Evento.ciudad -> cl.td.g2.eventos.model.Ciudad\"\n}"
+						},
+						{
+							"name": "400 Bad Request-viola FK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"titulo\": \"Fiesta de la Cerveza Negra\",\r\n\t\"descripcion\": \"Cervezas negras de todo Chile.\",\r\n\t\"fechaInicio\": \"2024-08-09T15:00:00\",\r\n\t\"fechaFin\": \"2024-08-11T18:00:00\",\r\n\t\"ubicacion\": \"Parque Municipal\",\r\n\t\"organizadorId\": 1,\r\n\t\"categoriaId\": 1,\r\n\t\"ciudadId\": 5,\r\n\t\"valor\": 1000,\r\n\t\"imagen_html\": \"<img src='festival_verano.jpg' />\",\r\n    \"fechaCreacion\": \"2024-08-08T15:00:00\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/eventos",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"eventos"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 06:43:38 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"BAD_REQUEST\",\n    \"statusCode\": 400,\n    \"message\": \"could not execute statement [ERROR: inserción o actualización en la tabla «eventos» viola la llave foránea «eventos_ciudad_id_fkey»\\n  Detail: La llave (ciudad_id)=(5) no está presente en la tabla «ciudades».] [insert into eventos (categoria_id,ciudad_id,descripcion,fecha_creacion,fecha_fin,fecha_inicio,imagen_html,organizador_id,titulo,ubicacion,valor) values (?,?,?,?,?,?,?,?,?,?,?) returning id]; SQL [insert into eventos (categoria_id,ciudad_id,descripcion,fecha_creacion,fecha_fin,fecha_inicio,imagen_html,organizador_id,titulo,ubicacion,valor) values (?,?,?,?,?,?,?,?,?,?,?) returning id]; constraint [null]\"\n}"
+						},
+						{
+							"name": "405 Method Not Allowed",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"titulo\": \"Fiesta de la Cerveza Negra\",\r\n\t\"descripcion\": \"Cervezas negras de todo Chile.\",\r\n\t\"fechaInicio\": \"2024-08-09T15:00:00\",\r\n\t\"fechaFin\": \"2024-08-11T18:00:00\",\r\n\t\"ubicacion\": \"Parque Municipal\",\r\n\t\"organizador_id\": 1,\r\n\t\"categoria_id\": 1,\r\n\t\"ciudad_id\": 4,\r\n\t\"valor\": 1000,\r\n\t\"imagen_html\": \"<img src='festival_verano.jpg' />\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/eventos/4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"eventos",
+										"4"
+									]
+								}
+							},
+							"status": "Method Not Allowed",
+							"code": 405,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 05:39:56 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"METHOD_NOT_ALLOWED\",\n    \"statusCode\": 405,\n    \"message\": \"Request method 'POST' is not supported\"\n}"
+						},
+						{
+							"name": "500 Internal Server Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"titulo\": \"Fiesta de la Cerveza Negra\",\r\n\t\"descripcion\": \"Cervezas negras de todo Chile.\",\r\n\t\"fechaInicio\": \"2024-08-09T15:00:00\",\r\n\t\"fechaFin\": \"2024-08-11 18:00:00\",\r\n\t\"ubicacion\": \"Parque Municipal\",\r\n\t\"organizador_id\": 1,\r\n\t\"categoria_id\": 1,\r\n\t\"ciudad_id\": 4,\r\n\t\"valor\": 1000,\r\n\t\"imagen_html\": \"<img src='festival_verano.jpg' />\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/eventos",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"eventos"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 05:21:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"INTERNAL_SERVER_ERROR\",\n    \"statusCode\": 500,\n    \"message\": \"JSON parse error: Cannot deserialize value of type `java.time.LocalDateTime` from String \\\"2024-08-11 18:00:00\\\": Failed to deserialize java.time.LocalDateTime: (java.time.format.DateTimeParseException) Text '2024-08-11 18:00:00' could not be parsed at index 10\"\n}"
+						}
+					]
+				},
+				{
+					"name": "id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"titulo\": \"Fiesta de la Cerveza Negra\",\r\n\t\"descripcion\": \"Cervezas negras de todo Chile.\",\r\n\t\"fechaInicio\": \"2024-08-09T15:00:00\",\r\n\t\"fechaFin\": \"2024-08-11T18:00:00\",\r\n\t\"ubicacion\": \"Parque Municipal Norte\",\r\n\t\"organizadorId\": 1,\r\n\t\"categoriaId\": 1,\r\n\t\"ciudadId\": 4,\r\n\t\"valor\": 1000,\r\n\t\"imagenHtml\": \"<img src='festival_verano.jpg' />\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/eventos/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"eventos",
+								"4"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"titulo\": \"Fiesta de la Cerveza Negra\",\r\n\t\"descripcion\": \"Cervezas negras de todo Chile.\",\r\n\t\"fechaInicio\": \"2024-08-09T15:00:00\",\r\n\t\"fechaFin\": \"2024-08-11T18:00:00\",\r\n\t\"ubicacion\": \"Parque Municipal Sur 3\",\r\n\t\"organizadorId\": 1,\r\n\t\"categoriaId\": 1,\r\n\t\"ciudadId\": 4,\r\n\t\"valor\": 1000,\r\n\t\"imagenHtml\": \"<img src='festival_verano.jpg' />\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/eventos/4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"eventos",
+										"4"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 06:55:41 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 4,\n    \"titulo\": \"Fiesta de la Cerveza Negra\",\n    \"descripcion\": \"Cervezas negras de todo Chile.\",\n    \"fechaInicio\": \"2024-08-09T15:00:00\",\n    \"fechaFin\": \"2024-08-11T18:00:00\",\n    \"ubicacion\": \"Parque Municipal Sur 3\",\n    \"organizadorId\": 1,\n    \"categoriaId\": 1,\n    \"ciudadId\": 4,\n    \"valor\": 1000,\n    \"imagenHtml\": \"<img src='festival_verano.jpg' />\",\n    \"fechaCreacion\": null\n}"
+						},
+						{
+							"name": "400 Bad Request-null property",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"titulo\": \"Fiesta de la Cerveza Negra\",\r\n\t\"descripcion\": \"Cervezas negras de todo Chile.\",\r\n\t\"fechaInicio\": \"2024-08-09T15:00:00\",\r\n\t\"fechaFin\": \"2024-08-11T18:00:00\",\r\n\t\"ubicacion\": \"Parque Municipal Norte\",\r\n\t\"organizadorId\": 1,\r\n\t\"categoriaId\": 1,\r\n\t\"ciudadId\": null,\r\n\t\"valor\": 1000,\r\n\t\"imagenHtml\": \"<img src='festival_verano.jpg' />\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/eventos/4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"eventos",
+										"4"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 06:56:38 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"BAD_REQUEST\",\n    \"statusCode\": 400,\n    \"message\": \"org.hibernate.TransientPropertyValueException: object references an unsaved transient instance - save the transient instance before flushing : cl.td.g2.eventos.model.Evento.ciudad -> cl.td.g2.eventos.model.Ciudad\"\n}"
+						},
+						{
+							"name": "404 Not Found-id=6",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"titulo\": \"Fiesta de la Cerveza Negra\",\r\n\t\"descripcion\": \"Cervezas negras de todo Chile.\",\r\n\t\"fechaInicio\": \"2024-08-09T15:00:00\",\r\n\t\"fechaFin\": \"2024-08-11T18:00:00\",\r\n\t\"ubicacion\": \"Parque Municipal Norte\",\r\n\t\"organizadorId\": 1,\r\n\t\"categoriaId\": 1,\r\n\t\"ciudadId\": 4,\r\n\t\"valor\": 1000,\r\n\t\"imagenHtml\": \"<img src='festival_verano.jpg' />\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/eventos/6",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"eventos",
+										"6"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 07:05:43 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"NOT_FOUND\",\n    \"statusCode\": 404,\n    \"message\": \"No existe Evento con: id=6\"\n}"
+						}
+					]
+				},
+				{
+					"name": "id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/eventos/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"eventos",
+								"7"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "404 Not Found-id=7",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/eventos/7",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"eventos",
+										"7"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 07:12:52 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"NOT_FOUND\",\n    \"statusCode\": 404,\n    \"message\": \"No existe Evento con: id=7\"\n}"
+						},
+						{
+							"name": "204 No Content",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/eventos/5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"eventos",
+										"5"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 07:13:58 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Inscripción",
+			"item": [
+				{
+					"name": "inscripciones",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/inscripciones",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"inscripciones"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "inscripciones",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/inscripciones",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"inscripciones"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 Aug 2024 04:01:08 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"usuarioId\": 2,\n        \"eventoId\": 1,\n        \"fechaInscripcion\": \"2024-08-12T22:56:24.477926\"\n    },\n    {\n        \"id\": 2,\n        \"usuarioId\": 3,\n        \"eventoId\": 2,\n        \"fechaInscripcion\": \"2024-08-12T22:56:24.477926\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/inscripciones/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"inscripciones",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "id=1",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/inscripciones/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"inscripciones",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 Aug 2024 04:04:26 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"usuarioId\": 2,\n    \"eventoId\": 1,\n    \"fechaInscripcion\": \"2024-08-12T22:56:24.477926\"\n}"
+						}
+					]
+				},
+				{
+					"name": "inscripciones",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"usuarioId\": 1,\r\n\t\"eventoId\": 4,\r\n\t\"fechaInscripcion\": \"2024-08-09T14:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/inscripciones",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"inscripciones"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201 Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"usuarioId\": 1,\r\n\t\"eventoId\": 4,\r\n\t\"fechaInscripcion\": \"2024-08-09T14:00:00\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/inscripciones",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"inscripciones"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 22:24:22 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 3,\n    \"usuarioId\": 1,\n    \"eventoId\": 4,\n    \"fechaInscripcion\": \"2024-08-09T14:00:00\"\n}"
+						}
+					]
+				},
+				{
+					"name": "id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"usuarioId\": 2,\r\n\t\"eventoId\": 4,\r\n\t\"fechaInscripcion\": \"2024-08-09T14:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/inscripciones/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"inscripciones",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"usuarioId\": 2,\r\n\t\"eventoId\": 4,\r\n\t\"fechaInscripcion\": \"2024-08-09T14:00:00\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/inscripciones/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"inscripciones",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 22:27:21 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 3,\n    \"usuarioId\": 2,\n    \"eventoId\": 4,\n    \"fechaInscripcion\": \"2024-08-09T14:00:00\"\n}"
+						}
+					]
+				},
+				{
+					"name": "id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/inscripciones/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"inscripciones",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "204 No Content",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/inscripciones/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"inscripciones",
+										"3"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 22:28:31 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "usuarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "usuarios",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/usuarios",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"usuarios"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 Aug 2024 04:01:15 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"nombre\": \"Admin\",\n        \"apellido\": \"Admin\",\n        \"email\": \"admin@eventos.com\",\n        \"fechaRegistro\": \"2024-08-12T22:56:24.477926\",\n        \"rol\": \"admin\"\n    },\n    {\n        \"id\": 2,\n        \"nombre\": \"Juan\",\n        \"apellido\": \"Perez\",\n        \"email\": \"juan.perez@example.com\",\n        \"fechaRegistro\": \"2024-08-12T22:56:24.477926\",\n        \"rol\": \"usuario\"\n    },\n    {\n        \"id\": 3,\n        \"nombre\": \"Maria\",\n        \"apellido\": \"Garcia\",\n        \"email\": \"maria.garcia@example.com\",\n        \"fechaRegistro\": \"2024-08-12T22:56:24.477926\",\n        \"rol\": \"usuario\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/usuarios/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "id=1",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/usuarios/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"usuarios",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 Aug 2024 04:15:24 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"nombre\": \"Admin\",\n    \"apellido\": \"Admin\",\n    \"email\": \"admin@eventos.com\",\n    \"fechaRegistro\": \"2024-08-12T22:56:24.477926\",\n    \"rol\": \"admin\"\n}"
+						}
+					]
+				},
+				{
+					"name": "usuarios",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Iván\",\r\n    \"apellido\": \"Zamorano\",\r\n    \"email\": \"izamorano@mail.com\",\r\n    \"contrasena\": \"1234\",\r\n    \"fechaRegistro\": \"2024-08-01T09:00:00\",\r\n    \"rol\": \"usuario\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "400 Bad Request-Valid-ErrorResponse",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"Iván\",\r\n    \"apellido\": \"Zamorano\",\r\n    \"email\": \"izamorano@mail.com\",\r\n    \"fechaInscripcion\": \"2024-08-01T09:00:00\",\r\n    \"rol\": \"usuario\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/usuarios",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"usuarios"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 22:48:37 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"BAD_REQUEST\",\n    \"statusCode\": 400,\n    \"message\": \"{fechaRegistro=La fecha de registro es requerida}\"\n}"
+						},
+						{
+							"name": "201 Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"Iván\",\r\n    \"apellido\": \"Zamorano\",\r\n    \"email\": \"izamorano@mail.com\",\r\n    \"contrasena\": \"1234\",\r\n    \"fechaRegistro\": \"2024-08-01T09:00:00\",\r\n    \"rol\": \"usuario\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/usuarios",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"usuarios"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 23:00:41 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 7,\n    \"nombre\": \"Iván\",\n    \"apellido\": \"Zamorano\",\n    \"email\": \"izamorano@mail.com\",\n    \"contrasena\": \"1234\",\n    \"fechaRegistro\": \"2024-08-01T09:00:00\",\n    \"rol\": \"usuario\"\n}"
+						}
+					]
+				},
+				{
+					"name": "id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Iván Luis\",\r\n    \"apellido\": \"Zamorano\",\r\n    \"email\": \"izamorano@mail.com\",\r\n    \"contrasena\": \"1234\",\r\n    \"fechaRegistro\": \"2024-08-01T09:00:00\",\r\n    \"rol\": \"usuario\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/usuarios/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios",
+								"7"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "400 Bad Request-Valid-ErrorResponse",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"Iván Luis\",\r\n    \"apellido\": \"Zamorano\",\r\n    \"email\": \"izamorano@mail.com\",\r\n    \"contrasena\": \"1234\",\r\n    \"fechaRegistro\": \"2024-08-01T09:00:00\",\r\n    \"rol\": \"usuario\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/usuarios/7",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"usuarios",
+										"7"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 23:17:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"BAD_REQUEST\",\n    \"statusCode\": 400,\n    \"message\": \"{fechaRegistro=La fecha de registro es requerida, apellido=El apellido del Usuario es requerido, contrasena=La contraseña del Usuario es requerida, email=El email del Usuario es requerido, rol=El rol del Usuario es requerido}\"\n}"
+						},
+						{
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"Iván Luis\",\r\n    \"apellido\": \"Zamorano\",\r\n    \"email\": \"izamorano@mail.com\",\r\n    \"contrasena\": \"1234\",\r\n    \"fechaRegistro\": \"2024-08-01T09:00:00\",\r\n    \"rol\": \"usuario\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/usuarios/7",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"usuarios",
+										"7"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 23:18:20 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 7,\n    \"nombre\": \"Iván Luis\",\n    \"apellido\": \"Zamorano\",\n    \"email\": \"izamorano@mail.com\",\n    \"contrasena\": \"1234\",\n    \"fechaRegistro\": \"2024-08-01T09:00:00\",\n    \"rol\": \"usuario\"\n}"
+						}
+					]
+				},
+				{
+					"name": "id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/usuarios/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios",
+								"7"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "404 Not Found-id=5",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/usuarios/5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"usuarios",
+										"5"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 23:19:38 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"NOT_FOUND\",\n    \"statusCode\": 404,\n    \"message\": \"No existe Usuario con: id=5\"\n}"
+						},
+						{
+							"name": "204 No Content",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/usuarios/7",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"usuarios",
+										"7"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 23:20:13 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		}
+	]
+}

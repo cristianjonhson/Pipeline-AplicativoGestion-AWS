@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Inscripción</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/styles/style.css}">
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <!-- Menú de Navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#" th:href="@{/}">
+            <i class="fas fa-calendar"></i> Gestión de Eventos
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" th:href="@{/}"><i class="fas fa-home"></i> Inicio <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Servicios
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#" th:href="@{/evento/lista}">Gestionar Eventos</a>
+                        <a class="dropdown-item" href="#" th:href="@{/calendario}">Ver Calendario</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/about}"><i class="fas fa-info-circle"></i> Acerca de</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/contact}"><i class="fas fa-envelope"></i> Contacto</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <div class="container my-4">
+            <h2>Editar Inscripción</h2>
+            <!-- Formulario para editar la inscripción -->
+            <form id="editarForm" th:action="@{/inscripciones/editar/{id}(id=${inscripcion.id})}"
+                th:object="${inscripcion}" method="post">
+                <div class="form-group mb-3">
+                    <label for="usuarioId">Nombre del Participante</label>
+                    <select class="form-control" id="usuarioId" th:field="*{usuarioId}" required>
+                        <option th:each="usuario : ${usuarios}" th:value="${usuario.id}"
+                            th:text="${usuario.nombre} + ' ' + ${usuario.apellido}"
+                            th:selected="${usuarioId == usuario.id}">
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="eventoId">Nombre del Evento</label>
+                    <select class="form-control" id="eventoId" th:field="*{eventoId}" required>
+                        <option th:each="evento : ${eventos}" th:value="${evento.id}"
+                            th:text="${evento.titulo}" th:selected="${eventoId == evento.id}">
+                    </select>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="fechaInscripcion">Fecha de Inscripción</label>
+                    <input type="datetime-local" id="fechaInscripcion" class="form-control"
+                        th:field="*{fechaInscripcion}" required>
+                </div>
+            </form>
+
+            <div class="d-flex mt-3">
+                <!-- Botón para guardar cambios -->
+                <button type="button" class="btn btn-primary me-2" onclick="return confirmEdit(event)">
+                    <i class="fas fa-save"></i> Guardar Cambios
+                </button>
+                <!-- Botón para eliminar inscripción -->
+                <button type="button" class="btn btn-danger" th:onclick="'confirmDelete(' + ${inscripcion.id} + ')'">
+                    <i class="fas fa-trash-alt"></i> Eliminar
+                </button>
+            </div>
+        </div>
+    </main>
+    <footer class="mt-5">
+        <div class="container">
+            <p>&copy; 2024 American Summer. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Script para confirmación y alertas -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            window.confirmEdit = function (event) {
+                event.preventDefault();
+                const form = document.getElementById("editarForm");
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "Vas a actualizar esta inscripción",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, guardar cambios',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        fetch(form.action, {
+                            method: 'POST',
+                            body: new FormData(form)
+                        }).then(response => {
+                            if (response.ok) {
+                                Swal.fire({
+                                    title: '¡Éxito!',
+                                    text: 'La inscripción ha sido actualizada correctamente.',
+                                    icon: 'success',
+                                    confirmButtonText: 'Ok'
+                                }).then(() => {
+                                    window.location.href = "/inscripciones/lista";
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Hubo un problema al actualizar la inscripción.',
+                                    icon: 'error',
+                                    confirmButtonText: 'Intentar nuevamente'
+                                });
+                            }
+                        }).catch(() => {
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Hubo un problema en el proceso de actualización.',
+                                icon: 'error',
+                                confirmButtonText: 'Intentar nuevamente'
+                            });
+                        });
+                    }
+                });
+            };
+
+            window.confirmDelete = function (id) {
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "Esta acción eliminará la inscripción permanentemente.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        fetch(`/inscripciones/eliminar/${id}`, { method: 'GET' })
+                            .then(response => {
+                                if (response.ok) {
+                                    Swal.fire({
+                                        title: '¡Éxito!',
+                                        text: 'La inscripción ha sido eliminada correctamente.',
+                                        icon: 'success',
+                                        confirmButtonText: 'Ok'
+                                    }).then(() => {
+                                        window.location.href = "/inscripciones/lista";
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'Error',
+                                        text: 'Hubo un problema al eliminar la inscripción.',
+                                        icon: 'error',
+                                        confirmButtonText: 'Intentar nuevamente'
+                                    });
+                                }
+                            })
+                            .catch(() => {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'No se pudo eliminar la inscripción.',
+                                    icon: 'error',
+                                    confirmButtonText: 'Intentar nuevamente'
+                                });
+                            });
+                    }
+                });
+            }
+        });
+    </script>
+
+    <!-- Bootstrap JS y dependencias -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

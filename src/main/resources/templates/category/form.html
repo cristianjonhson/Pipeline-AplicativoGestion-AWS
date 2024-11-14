@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Categoría</title>
+   <!-- Bootstrap CSS -->
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+   <link rel="stylesheet" th:href="@{/styles/style.css}">
+   <!-- FontAwesome CSS -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+   <!-- Menú de Navegación -->
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+       <a class="navbar-brand" href="#" th:href="@{/}">
+           <i class="fas fa-calendar"></i> Gestión de Eventos
+       </a>
+       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+           <span class="navbar-toggler-icon"></span>
+       </button>
+       <div class="collapse navbar-collapse" id="navbarNav">
+           <ul class="navbar-nav ml-auto">
+               <li class="nav-item active">
+                   <a class="nav-link" href="#" th:href="@{/}"><i class="fas fa-home"></i> Inicio <span
+                           class="sr-only">(current)</span></a>
+               </li>
+               <li class="nav-item dropdown">
+                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                       Servicios
+                   </a>
+                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                       <a class="dropdown-item" href="#" th:href="@{/evento/lista}">Gestionar Eventos</a>
+                       <a class="dropdown-item" href="#" th:href="@{/calendario}">Ver Calendario</a>
+                   </div>
+               </li>
+               <li class="nav-item">
+                   <a class="nav-link" href="#" th:href="@{/about}"><i class="fas fa-info-circle"></i> Acerca de</a>
+               </li>
+               <li class="nav-item">
+                   <a class="nav-link" href="#" th:href="@{/contact}"><i class="fas fa-envelope"></i> Contacto</a>
+               </li>
+           </ul>
+       </div>
+   </nav>
+   <main>
+       <div class="container mt-8">
+        <h2>Crear Categoría</h2>
+
+        <!-- Formulario para crear una categoría -->
+        <form id="categoriaForm" th:action="@{/categorias/guardar}" th:object="${categoriaDTO}" method="post">
+            <div class="form-group">
+                <label for="nombre">Nombre de la Categoría</label>
+                <input type="text" class="form-control" id="nombre" th:field="*{nombre}" required>
+            </div>
+            <div class="d-flex mt-3">
+                <button type="submit" id="saveCategory" class="btn btn-success me-2">Guardar</button>
+                <a href="/" class="btn btn-secondary">Cancelar</a>
+            </div>
+
+        </form>
+    </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 American Summer. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS y dependencias -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+    <!-- Script para manejar la confirmación y éxito -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('categoriaForm');
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevenir el envío normal del formulario
+
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "¡Vas a guardar esta categoría!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, guardar!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Enviar el formulario y esperar la respuesta
+                        fetch(form.action, {
+                            method: 'POST',
+                            body: new FormData(form)
+                        }).then(response => {
+                            if (response.ok) {
+                                // Aquí va el segundo SweetAlert después de la confirmación y éxito del guardado
+                                return Swal.fire({
+                                    title: '¡Éxito!',
+                                    text: 'La categoría ha sido creada correctamente.',
+                                    icon: 'success',
+                                    confirmButtonText: 'Ok'
+                                });
+                            } else {
+                                throw new Error('Error al guardar la categoría.');
+                            }
+                        }).then(() => {
+                            // Redirigir al listado de categorías
+                            window.location.href = "/categoria/lista"; // URL del listado de categorías
+                        }).catch(error => {
+                            Swal.fire({
+                                title: 'Error',
+                                text: error.message || 'Hubo un problema al guardar la categoría.',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

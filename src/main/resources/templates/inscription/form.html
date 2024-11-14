@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscripción a Evento</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/styles/style.css}">
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <!-- Menú de Navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#" th:href="@{/}">
+            <i class="fas fa-calendar"></i> Gestión de Eventos
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" th:href="@{/}"><i class="fas fa-home"></i> Inicio <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Servicios
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#" th:href="@{/evento/lista}">Gestionar Eventos</a>
+                        <a class="dropdown-item" href="#" th:href="@{/calendario}">Ver Calendario</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/about}"><i class="fas fa-info-circle"></i> Acerca de</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/contact}"><i class="fas fa-envelope"></i> Contacto</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <div class="container">
+            <h1 class="mt-5">Inscripción a Evento</h1>
+
+            <!-- Formulario de inscripción -->
+            <form id="inscripcionForm" action="#" th:action="@{/inscripciones/guardar}" th:object="${inscripcionDTO}"
+                method="post">
+                <div class="form-group">
+                    <label for="usuarioId">Nombre del Participante</label>
+                    <select class="form-control" id="usuarioId" th:field="*{usuarioId}" required>
+                        <option value="">Selecciona...</option>
+                        <option th:each="usuario : ${usuarios}" th:value="${usuario.id}"
+                            th:text="${usuario.nombre} + ' ' + ${usuario.apellido}">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="eventoId">Nombre del Evento</label>
+                    <select class="form-control" id="eventoId" th:field="*{eventoId}" required>
+                        <option value="">Selecciona...</option>
+                        <option th:each="evento : ${eventos}" th:value="${evento.id}"
+                            th:text="${evento.titulo}">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="fechaInscripcion">Fecha de Inscripción</label>
+                    <input type="datetime-local" class="form-control" id="fechaInscripcion"
+                        th:field="*{fechaInscripcion}" required>
+                </div>
+                <button type="submit" class="btn btn-success">Inscribirse</button>
+            </form>
+
+            <a href="/" class="btn btn-secondary mt-3">Cancelar</a>
+        </div>
+    </main>
+    <footer class="mt-5">
+        <div class="container">
+            <p>&copy; 2024 American Summer. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('inscripcionForm');
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevenir el envío normal del formulario
+
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "¡Estás por inscribirte a este evento!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, inscribirse!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Enviar el formulario
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
+    <!-- Bootstrap JS y dependencias -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+</body>
+
+</html>

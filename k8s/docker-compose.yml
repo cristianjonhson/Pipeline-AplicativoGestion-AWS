@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: gestion_eventos
+    networks:
+      - gestion_eventos_network 
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "5432:5432"
+
+  app:
+    image: gestion_eventos_app_image
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gestion_eventos
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: admin
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+      SERVER_PORT: 8082
+      SPRING_APPLICATION_NAME: G2-GestionEventos
+    networks:
+      - gestion_eventos_network
+    depends_on:
+      - postgres
+    deploy:
+      replicas: 2  # Puedes cambiar este número para escalar tu aplicación
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "8082:8082"
+
+networks:
+  gestion_eventos_network:
+    driver: overlay
+
+volumes:
+  pgdata:

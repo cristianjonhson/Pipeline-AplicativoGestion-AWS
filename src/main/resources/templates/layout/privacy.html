@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Sistema de gestión de eventos para crear, administrar y organizar actividades de manera sencilla y rápida.">
+    <meta name="keywords"
+        content="gestión de eventos, calendario, administración, inscripciones, ciudades, categorías, usuarios">
+    <title>Política de Privacidad</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/styles/style.css}">
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+   
+     <!-- Menú de Navegación -->
+     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#" th:href="@{/}">
+            <i class="fas fa-calendar"></i> Gestión de Eventos
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" th:href="@{/}"><i class="fas fa-home"></i> Inicio <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Servicios
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#" th:href="@{/eventos/form}">Gestionar Eventos</a>
+                        <a class="dropdown-item" href="#" th:href="@{/calendario}">Ver Calendario</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/about}"><i class="fas fa-info-circle"></i> Acerca de</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/contact}"><i class="fas fa-envelope"></i> Contacto</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+    <div class="container mt-8">
+        <h1>Política de Privacidad</h1>
+        <p>Última actualización: Octubre 2024</p>
+
+        <section>
+            <h2>1. Información Recopilada</h2>
+            <p>Recopilamos la información que proporcionas directamente al usar nuestros servicios, como tu nombre,
+                dirección de correo electrónico, y otros datos necesarios para interactuar con nuestro sitio.</p>
+        </section>
+
+        <section>
+            <h2>2. Uso de la Información</h2>
+            <p>Utilizamos la información recopilada para mejorar nuestros servicios, personalizar tu experiencia, y
+                mantener la seguridad de la plataforma.</p>
+        </section>
+
+        <section>
+            <h2>3. Compartir la Información</h2>
+            <p>No compartimos tu información personal con terceros, salvo cuando sea necesario para cumplir con la ley o
+                en situaciones específicas donde lo consientas explícitamente.</p>
+        </section>
+
+        <section>
+            <h2>4. Derechos del Usuario</h2>
+            <p>Tienes derecho a acceder, rectificar, o eliminar tu información personal en cualquier momento. Para
+                ejercer estos derechos, por favor contáctanos en <a
+                    href="mailto:info@americansummer.cl">info@americansummer.cl</a>.</p>
+        </section>
+    </div>
+</main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Eventos Verano. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

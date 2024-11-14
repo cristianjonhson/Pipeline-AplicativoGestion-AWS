@@ -1,0 +1,109 @@
+/* Configuración de altura completa para html y body */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Ajustes generales para el body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column; /* Asegura que los elementos se alineen verticalmente */
+}
+
+/* Ajustes para la navegación */
+.navbar {
+    margin-top: 0; /* Asegúrate de que no haya margen superior extra */
+    padding-top: 0; /* Ajusta el padding superior si es necesario */
+}
+
+/* Ajustes para el header */
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+/* Estilos del menú de navegación */
+nav {
+    margin: 0; /* Asegúrate de que no haya margen extra */
+    padding: 0; /* Asegúrate de que no haya padding extra */
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+/* Contenedor principal que ocupa el espacio restante */
+main {
+    flex: 1; /* Ocupar el espacio restante entre header y footer */
+    padding: 20px;
+}
+
+/* Estilos del pie de página */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin-top: auto; /* Empuja el footer al final de la página */
+    width: 100%;
+}
+
+/* Estilos adicionales para el contenedor del calendario */
+.container {
+    max-width: 960px; /* Puedes ajustar esto según el diseño deseado */
+}
+
+/* Ajustes específicos para dispositivos móviles */
+@media (max-width: 768px) {
+    nav ul li {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    nav ul li a {
+        display: block;
+    }
+}
+
+@media (max-width: 576px) {
+    main {
+        padding: 10px;
+    }
+}
+
+
+/* Estilos para el Datepicker */
+.datepicker {
+    border-radius: 0.25rem; /* Bordes redondeados para el contenedor del Datepicker */
+}
+
+.datepicker .datepicker-days .day.active, 
+.datepicker .datepicker-days .day.selected {
+    background-color: #007bff; /* Color de fondo de la fecha seleccionada */
+    color: white; /* Color del texto de la fecha seleccionada */
+    border-radius: 50%; /* Hacer el fondo de la fecha seleccionado redondo */
+}
+
+/* Opcional: Estilo para el hover de las fechas */
+.datepicker .datepicker-days .day:hover {
+    background-color: #0056b3; /* Color de fondo al pasar el ratón sobre una fecha */
+    color: white; /* Color del texto al pasar el ratón sobre una fecha */
+    border-radius: 50%; /* Hacer el fondo de la fecha redondo al pasar el ratón */
+}

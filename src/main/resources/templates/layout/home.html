@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Sistema de gestión de eventos para crear, administrar y organizar actividades de manera sencilla y rápida.">
+    <meta name="keywords"
+        content="gestión de eventos, calendario, administración, inscripciones, ciudades, categorías, usuarios">
+    <title>Inicio</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/styles/style.css}">
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+    <!-- Menú de Navegación -->
+    <!-- Menú de Navegación -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#" th:href="@{/}">
+        <i class="fas fa-calendar"></i> Gestión de Eventos
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#" th:href="@{/}"><i class="fas fa-home"></i> Inicio <span
+                        class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Servicios
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#" th:href="@{/evento/lista}">Gestionar Eventos</a>
+                    <a class="dropdown-item" href="#" th:href="@{/calendario}">Ver Calendario</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:href="@{/about}"><i class="fas fa-info-circle"></i> Acerca de</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:href="@{/contact}"><i class="fas fa-envelope"></i> Contacto</a>
+            </li>
+            <!-- Sección de bienvenida y cierre de sesión -->
+            <ul class="navbar-nav">
+                <li class="nav-item" th:if="${usuario != null}">
+                    <span class="navbar-text" th:text="'Bienvenido, ' + ${usuario.nombre}"></span>
+                </li>
+                <li class="nav-item" th:if="${usuario != null}">
+                    <a class="nav-link" href="#" th:href="@{/logout}" aria-label="Cerrar sesión">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                    </a>
+                </li>
+            </ul>          
+        </ul>
+    </div>
+</nav>
+
+
+    <main>
+        <!-- Contenido principal -->
+        <div class="container">
+            <h1>Bienvenido al Sistema de Gestión de Eventos</h1>
+            <p>En nuestra plataforma podrás gestionar tus eventos de manera sencilla y rápida. Navega por nuestras
+                funcionalidades para crear nuevos eventos, ver tu calendario y administrar todas las actividades que
+                desees organizar.</p>
+            <div class="row my-2"> <!-- Ajuste de margen reducido -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-calendar-alt fa-3x mb-3"></i>
+                            <h5 class="card-title">Gestionar Eventos</h5>
+                            <p class="card-text">Crea, edita y elimina eventos de tu agenda.</p>
+                            <a href="#" th:href="@{/evento/lista}" class="btn btn-primary"
+                                aria-label="Crear un nuevo evento">
+                                <i class="fas fa-plus-circle" aria-hidden="true"></i> Ir a Gestionar Eventos
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-calendar-day fa-3x mb-3"></i>
+                            <h5 class="card-title">Ver Calendario</h5>
+                            <p class="card-text">Consulta y organiza tus eventos en el calendario.</p>
+                            <a href="#" th:href="@{/calendario}" class="btn btn-primary"
+                                aria-label="Ver el calendario de eventos">
+                                <i class="fas fa-calendar-check" aria-hidden="true"></i> Ir a Calendario
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-users fa-3x mb-3"></i>
+                            <h5 class="card-title">Ver Inscripciones</h5>
+                            <p class="card-text">Consulta el listado de inscripciones a los eventos.</p>
+                            <a href="#" th:href="@{/inscripciones/lista}" class="btn btn-primary"
+                                aria-label="Ver inscripciones">
+                                <i class="fas fa-list-alt" aria-hidden="true"></i> Ver Inscripciones
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row my-2"> <!-- Otra fila con margen reducido -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-city fa-3x mb-3"></i>
+                            <h5 class="card-title">Gestionar Ciudades</h5>
+                            <p class="card-text">Añade, edita o elimina ciudades disponibles para los eventos.</p>
+                            <a href="#" th:href="@{/ciudades/lista}" class="btn btn-primary"
+                                aria-label="Gestionar ciudades">
+                                <i class="fas fa-map-marker-alt" aria-hidden="true"></i> Ir a Ciudades
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-tag fa-3x mb-3"></i>
+                            <h5 class="card-title">Gestionar Categorías</h5>
+                            <p class="card-text">Administra las categorías de eventos disponibles.</p>
+                            <a href="#" th:href="@{/categoria/lista}" class="btn btn-primary"
+                                aria-label="Gestionar categorías">
+                                <i class="fas fa-tags" aria-hidden="true"></i> Ir a Categorías
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-user fa-3x mb-3"></i>
+                            <h5 class="card-title">Gestionar Usuarios</h5>
+                            <p class="card-text">Administra los usuarios del sistema y sus roles.</p>
+                            <a href="#" th:href="@{/usuarios/lista}" class="btn btn-primary" aria-label="Gestionar usuarios">
+                                <i class="fas fa-user-cog" aria-hidden="true"></i> Ir a Usuarios
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container-fluid">
+            <div class="row d-flex justify-content-between">
+                <div class="col-md-2 col-sm-6 mb-3">
+                    <h5>Sobre Nosotros</h5>
+                    <p>Nos especializamos en la organización de eventos inolvidables para tus veranos, creando
+                        experiencias únicas bajo el sol.</p>
+                </div>
+                <div class="col-md-2 col-sm-6 mb-3">
+                    <h5>Navegación</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" th:href="@{/}" class="text-white" aria-label="Ir a Inicio"><i class="fas fa-home" aria-hidden="true"></i> Inicio</a></li>
+                        <li><a href="#" th:href="@{/about}" class="text-white" aria-label="Ir a Acerca de"><i class="fas fa-info-circle" aria-hidden="true"></i> Acerca de</a></li>
+                        <li><a href="#" th:href="@{/servicios}" class="text-white" aria-label="Ir a Servicios"><i class="fas fa-concierge-bell" aria-hidden="true"></i> Servicios</a></li>
+                        <li><a href="#" th:href="@{/contact}" class="text-white" aria-label="Ir a Contacto"><i class="fas fa-envelope" aria-hidden="true"></i> Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 col-sm-6 mb-3">
+                    <h5>Contacto</h5>
+                    <p><i class="fas fa-map-marker-alt"></i> Calle Falsa 123, Ciudad</p>
+                    <p><i class="fas fa-phone"></i> +1 234 567 890</p>
+                    <p><i class="fas fa-envelope"></i> info@americansummer.cl</p>
+                </div>
+                <div class="col-md-2 col-sm-6 mb-3">
+                    <h5>Derechos Reservados</h5>
+                    <p>&copy; 2024 Eventos Verano. Todos los derechos reservados.</p>
+                </div>
+                <div class="col-md-2 col-sm-6 mb-3">
+                    <h5>Términos y Condiciones</h5>
+                    <a href="#" class="text-white" th:href="@{/terms}" aria-label="Ver Términos y Condiciones"><i class="fas fa-file-contract" aria-hidden="true"></i> Términos y Condiciones</a> |
+                    <a href="#" class="text-white" th:href="@{/privacy}" aria-label="Ver Política de Privacidad"><i class="fas fa-shield-alt" aria-hidden="true"></i> Política de Privacidad</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    
+    <!-- Bootstrap JS y dependencias -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js"></script>
+        
+</body>
+
+</html>

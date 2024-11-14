@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario de Eventos</title>
+    <!-- FullCalendar CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/styles/style.css}">
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Estilo del contenedor para el calendario y el mapa */
+        .content {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #calendar {
+            flex: 2; /* Ocupa 2 partes del espacio */
+            margin-right: 10px; /* Espaciado entre el calendario y el mapa */
+        }
+
+        #map {
+            flex: 1; /* Ocupa 1 parte del espacio */
+        }
+
+        /* Estilo de los eventos */
+        .fc-event {
+            background-color: #007bff; /* Color de fondo */
+            color: white; /* Color del texto */
+            border: none; /* Sin borde */
+            border-radius: 5px; /* Bordes redondeados */
+            font-size: 1em; /* Tamaño de fuente más grande */
+            white-space: normal; /* Permite que el texto se ajuste a múltiples líneas */
+            line-height: 1.0; /* Mejora la separación entre líneas */
+            word-wrap: break-word; /* Permite que el texto largo se ajuste dentro del evento */
+            max-height: 240px; /* Limita la altura máxima del evento */
+            overflow: hidden; /* Evita que el texto desborde */
+        }
+
+        /* Estilo de la descripción */
+        .fc-event-description {
+            font-size: 0.6em; /* Un poco más pequeño para diferenciar del título */
+            color: #f1f1f1; /* Color ligeramente más claro que el texto del título */
+            margin-top: 5px; /* Espaciado adicional sobre la descripción */
+        }
+
+        /* Estilo para los eventos al pasar el mouse */
+        .fc-event:hover {
+            cursor: pointer; /* Cambia el cursor */
+        }
+
+        /* Estilo del contenido de los eventos */
+        .fc-event-content {
+            display: flex;
+            flex-direction: column; /* Coloca el contenido en columnas */
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        /* Espaciado entre el título y la descripción */
+        .fc-event-content strong {
+            margin-bottom: 5px; /* Espaciado inferior */
+        }
+
+        /* Valor del evento */
+        .fc-event-content span.valor {
+            font-weight: bold; /* Negrita para el valor */
+            font-size: 0.85em; /* Tamaño más pequeño */
+            color: #f8d210; /* Color dorado para resaltar el valor */
+            margin-top: 5px;
+        }
+
+        /* Estilo del mapa */
+        #map {
+            height: 400px; /* Altura del mapa */
+            width: 100%; /* Ancho del mapa */
+            display: none; /* Oculta el mapa inicialmente */
+        }
+    </style>
+</head>
+<body>
+     <!-- Menú de Navegación -->
+     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#" th:href="@{/}">
+            <i class="fas fa-calendar"></i> Gestión de Eventos
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" th:href="@{/}"><i class="fas fa-home"></i> Inicio <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Servicios
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#" th:href="@{/evento/lista}">Gestionar Eventos</a>
+                        <a class="dropdown-item" href="#" th:href="@{/calendario}">Ver Calendario</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/about}"><i class="fas fa-info-circle"></i> Acerca de</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/contact}"><i class="fas fa-envelope"></i> Contacto</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <div class="container mt-8">
+        <h1 class="my-4">Calendario de Eventos</h1>
+        <div class="content">
+            <div id="calendar"></div>
+
+            <!-- Contenedor para el mapa -->
+            <div id="map"></div>
+        </div>
+    </div>
+</main>
+<footer>
+    <div class="container">
+        <p>&copy; 2024 American Summer. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+    <!-- FullCalendar JS -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxb4gynsj-hVWIa-PRb_2KfyEopv0gWIo"></script>
+    <script th:inline="javascript">
+        var eventos = /*[[${eventosJson}]]*/ '{}';
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+
+            // Convertimos el JSON a un formato adecuado para FullCalendar
+            var eventosConvertidos = JSON.parse(eventos).map(evento => ({
+                title: evento.titulo,
+                start: evento.fechaInicio,  // Aseguramos que fechaInicio esté en formato ISO
+                end: evento.fechaFin,       // Fecha de fin opcional
+                description: evento.descripcion,
+                location: evento.ubicacion,
+                image: evento.imagenHtml,
+                valor: evento.valor
+            }));
+
+            // Inicializamos FullCalendar
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',  // Muestra la vista de calendario por mes
+                locale: 'es',                 // Localización en español
+                events: eventosConvertidos,   // Añade los eventos al calendario
+
+                // Personaliza cómo se muestra el contenido de los eventos
+                eventContent: function (info) {
+                    let element = document.createElement('div');
+                    element.classList.add('fc-event-content');
+
+                    // Muestra el título del evento
+                    element.innerHTML = '<strong>' + info.event.title + '</strong>';
+
+                    // Muestra descripción debajo del título
+                    if (info.event.extendedProps.description) {
+                        element.innerHTML += '<br>' + info.event.extendedProps.description;
+                    }
+
+                    // Espacio entre descripción y ubicación
+                    element.innerHTML += '<br>'; // Agrega un espacio adicional
+                    element.innerHTML += '<br>';
+
+                    // Muestra la ubicación
+                    if (info.event.extendedProps.location) {
+                        element.innerHTML += '<strong>Ubicación: </strong><span class="ubicacion">' + 
+                            info.event.extendedProps.location + '</span>';
+                    }
+
+                    // Muestra el valor
+                    const valor = info.event.extendedProps.valor || 0; // Valor por defecto en caso de que no esté definido
+                    element.innerHTML += '<br><span class="valor">Valor: $ ' + valor.toFixed(2) + '</span>';
+
+                    return { domNodes: [element] };
+                },
+
+                // Manejo del clic en el evento
+                eventClick: function (info) {
+                    const location = info.event.extendedProps.location;
+
+                    // Verifica que la ubicación no esté vacía
+                    if (location) {
+                        // Solicitud a la API de Geocoding
+                        const geocodingApiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(location)}&key=AIzaSyDxb4gynsj-hVWIa-PRb_2KfyEopv0gWIo`;
+
+                        fetch(geocodingApiUrl)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.results.length > 0) {
+                                    const latlng = data.results[0].geometry.location;
+                                    const latitud = latlng.lat;
+                                    const longitud = latlng.lng;
+
+                                    // Inicializa el mapa en la ubicación obtenida
+                                    var map = new google.maps.Map(document.getElementById('map'), {
+                                        center: { lat: latitud, lng: longitud },
+                                        zoom: 10
+                                    });
+
+                                    // Marca la ubicación
+                                    new google.maps.Marker({
+                                        position: { lat: latitud, lng: longitud },
+                                        map: map
+                                    });
+
+                                    // Muestra el mapa
+                                    document.getElementById('map').style.display = 'block';
+                                } else {
+                                    console.error('No se encontraron resultados para la ubicación:', location);
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error al obtener coordenadas:', error);
+                            });
+                    } else {
+                        console.error('Ubicación no válida:', location);
+                    }
+                }
+            });
+
+            // Renderiza el calendario con los eventos
+            calendar.render();
+        });
+    </script>
+</body>
+
+</html>

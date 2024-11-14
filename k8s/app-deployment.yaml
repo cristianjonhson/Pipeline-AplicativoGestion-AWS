@@ -1,0 +1,50 @@
+# app-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gestion-eventos-app
+  labels:
+    app: gestion-eventos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gestion-eventos
+  template:
+    metadata:
+      labels:
+        app: gestion-eventos
+    spec:
+      containers:
+      - name: gestion-eventos-app
+        image: gestion_eventos_app_image
+        env:
+          - name: SPRING_DATASOURCE_URL
+            value: "jdbc:postgresql://postgres:5432/gestion_eventos"
+          - name: SPRING_DATASOURCE_USERNAME
+            value: "postgres"
+          - name: SPRING_DATASOURCE_PASSWORD
+            value: "admin"
+          - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+            value: "org.postgresql.Driver"
+          - name: SPRING_JPA_DATABASE_PLATFORM
+            value: "org.hibernate.dialect.PostgreSQLDialect"
+          - name: SERVER_PORT
+            value: "8082"
+          - name: SPRING_APPLICATION_NAME
+            value: "G2-GestionEventos"
+        ports:
+          - containerPort: 8082
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gestion-eventos-service
+spec:
+  type: NodePort
+  ports:
+    - port: 8082
+      targetPort: 8082
+      nodePort: 30000  # Ajusta este puerto según sea necesario
+  selector:
+    app: gestion-eventos
