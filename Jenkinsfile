@@ -1,8 +1,3 @@
-def COLOR_MAP = [
-  'SUCCESS': 'good',
-  'FAILURE':'danger',
-]
-
 pipeline {
     agent any
     
@@ -33,6 +28,14 @@ pipeline {
         SONARQUBE_URL = 'http://localhost:9000'
         scannerHome = tool 'SonarQubeScanner'
 
+        //terraform
+        TF_VAR_aws_region = 'us-east-1'
+        GITHUB_TOKEN = credentials('github-token')
+        AWS_CREDENTIALS = credentials('AWS_CREDENTIALS')
+    }
+  
+    tools {
+        terraform 'terraform'
     }
     
     stages {
@@ -307,7 +310,89 @@ EOF
                 }
             }
         }
+
+        stage('Verificar recursos a eliminar') {
+            steps {
+                script {
+                    echo "\033[33mVerificando si existen recursos a eliminar...\033[0m"
+                    dir('Pipeline-AplicativoGestion-AWS') {
+                        if (fileExists('tfplan')) {
+                            try {
+                                def planOutput = sh(script: 'terraform state list', returnStdout: true).trim()
+                                if (planOutput) {
+                                    echo "\033[31mSe detectaron recursos a eliminar. Ejecutando terraform destroy...\033[0m"
+                                    sh 'terraform destroy -auto-approve'
+                                    currentBuild.result = 'SUCCESS'
+                                    return
+                                } else {
+                                    echo "\033[32mNo se detectaron recursos a eliminar. Continuando con terraform apply...\033[0m"
+                                }
+                            } catch (Exception e) {
+                                echo "\033[31mError al leer el archivo tfplan: ${e.message}\033[0m"
+                                currentBuild.result = 'FAILURE'
+                                return
+                            }
+                        } else {
+                            echo "\033[31mEl archivo 'tfplan' no existe. Por favor, asegúrese de ejecutar el plan primero.\033[0m"
+                            currentBuild.result = 'FAILURE'
+                            return
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Generar plan de Terraform') {
+            when {
+                expression { fileExists('tfplan') && currentBuild.result != 'SUCCESS' }
+            }
+            steps {
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'AWS_CREDENTIALS'
+                ]]) {
+                    script {
+                        echo "\033[33mEjecutando terraform plan...\033[0m"
+                        dir('Pipeline-AplicativoGestion-AWS') {
+                            if (!fileExists(".terraform")) {
+                                echo "\033[33mInicializando Terraform por primera vez...\033[0m"
+                                sh 'terraform init -input=false'
+                            }
+
+                            echo "\033[33mGenerando el archivo 'tfplan'...\033[0m"
+                            sh 'terraform plan -out=tfplan'
+                            echo "\033[32mPlan de Terraform generado con éxito...\033[0m"
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Aplicar plan de Terraform') {
+            when {
+                expression { fileExists('tfplan') && currentBuild.result != 'SUCCESS' }
+            }
+            steps {
+                echo "\033[32mAplicando cambios con terraform apply...\033[0m"
+                dir('Pipeline-AplicativoGestion-AWS') {
+                    sh 'terraform apply -auto-approve tfplan'
+                }
+            }
+        }
     }
+}
+
+        post {
+                always {
+                    echo "\033[1mPipeline finalizado\033[0m"
+                }
+                success {
+                    echo "\033[32mPipeline ejecutado con éxito!\033[0m"
+                }
+                failure {
+                    echo "\033[31mPipeline falló. Revisar los logs.\033[0m"
+                }
+            }
 
    /* post {
         always {
