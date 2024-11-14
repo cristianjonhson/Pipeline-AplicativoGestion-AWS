@@ -32,6 +32,7 @@ pipeline {
         // Define el SonarQube Server a utilizar
         SONARQUBE_URL = 'http://localhost:9000'
         scannerHome = tool 'SonarQubeScanner'
+
     }
     
     stages {
@@ -39,7 +40,7 @@ pipeline {
             steps {
                 // Clonar el repositorio
                  echo "\u001B[36mClonando repositorio...\u001B[0m"
-                git url: 'https://github.com/cristianjonhson/TD_Kibernum_Devops_Grupo2AmericanSummer-GestionEventos.git', branch: 'feature/PT2-45-JM'
+                git url: 'git clone https://github.com/cristianjonhson/Pipeline-AplicativoGestion-AWS.git', branch: 'master'
             }
         }
 
