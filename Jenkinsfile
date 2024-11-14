@@ -36,11 +36,43 @@ pipeline {
     }
     
     stages {
-        stage('Checkout') {
+        stage('Clonar o actualizar repositorio') {
             steps {
-                // Clonar el repositorio
-                 echo "\u001B[36mClonando repositorio...\u001B[0m"
-                git url: 'git clone https://github.com/cristianjonhson/Pipeline-AplicativoGestion-AWS.git', branch: 'master'
+                ansiColor('xterm') {
+                    echo "\033[34mClonando o actualizando el repositorio desde GitHub...\033[0m"
+                    script {
+                        withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_TOKEN')]) {
+                            if (!fileExists('Pipeline-AplicativoGestion-AWS')) {
+                                echo "\033[32mRepositorio no encontrado, clonando el repositorio...\033[0m"
+                                sh 'git clone https://github.com/cristianjonhson/Pipeline-AplicativoGestion-AWS.git'
+                            } else {
+                                echo "\033[33mRepositorio ya existente, actualizando el repositorio...\033[0m"
+                                dir('Pipeline-AplicativoGestion-AWS') {
+                                    sh '''
+                                        # Comprueba y establece 'user.name' solo si no está configurado
+                                        if ! git config --get user.name > /dev/null; then
+                                            echo "Configuración de 'user.name' no encontrada. Estableciendo 'user.name'..."
+                                            git config user.name "Cristian Jonhson Alvarez"
+                                        else
+                                            echo "Configuración de 'user.name' ya existente"
+                                        fi
+        
+                                        # Comprueba y establece 'user.email' solo si no está configurado
+                                        if ! git config --get user.email > /dev/null; then
+                                            echo "Configuración de 'user.email' no encontrada. Estableciendo 'user.email'..."
+                                            git config user.email "cristian.jonhson@inacapmail.cl"
+                                        else
+                                            echo "Configuración de 'user.email' ya existente"
+                                        fi
+        
+                                        git reset --hard    
+                                        git pull --rebase origin master
+                                    '''
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
