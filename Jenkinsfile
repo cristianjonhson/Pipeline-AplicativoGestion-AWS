@@ -79,7 +79,7 @@ pipeline {
         stage('Build Project with Maven') {
             steps {
                 // Construir el proyecto con Maven
-                echo "\u001B[32mConstruyendo proyecro con Maven...\u001B[0m"
+                echo "\u001B[32mConstruyendo proyecto con Maven...\u001B[0m"
                 sh 'mvn -f pom.xml clean install'
             }
         }
