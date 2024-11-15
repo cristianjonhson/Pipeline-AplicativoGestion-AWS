@@ -30,6 +30,9 @@ pipeline {
         TF_VAR_aws_region = 'us-east-1'
         GITHUB_TOKEN = credentials('github-token')
         AWS_CREDENTIALS = credentials('AWS_CREDENTIALS')
+        SSH_CREDENTIALS_ID = 'ssh-credentials-id' // ID de las credenciales SSH en Jenkins
+        EC2_USER = 'ec2-user' // Usuario de la instancia EC2
+    
     }
   
     tools {
@@ -203,18 +206,20 @@ pipeline {
             }
         }
 
-        stage('Obtener ID de EC2') {
+        stage('Obtener ID y IP de EC2') {
             steps {
-                echo "\u001B[34mObteniendo ID de la instancia EC2...\u001B[0m"
+                echo "\u001B[34mObteniendo ID y dirección IP de la instancia EC2...\u001B[0m"
                 script {
                     dir('Pipeline-AplicativoGestion-AWS') {
                         def ec2Id = sh(script: 'terraform output -raw instance_id', returnStdout: true).trim()
+                        def ec2Ip = sh(script: 'terraform output -raw instance_public_ip', returnStdout: true).trim()
                         echo "ID de la instancia EC2: ${ec2Id}"
+                        echo "IP de la instancia EC2: ${ec2Ip}"
+                        env.EC2_HOST = ec2Ip
                     }
                 }
             }
         }
-    }
 
     post {
         always {
