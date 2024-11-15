@@ -207,12 +207,15 @@ pipeline {
         }
 
         stage('Obtener ID y IP de EC2') {
+            when {
+                expression { currentBuild.result != 'SUCCESS' }
+            }
             steps {
                 echo "\u001B[34mObteniendo ID y dirección IP de la instancia EC2...\u001B[0m"
                 script {
                     dir('Pipeline-AplicativoGestion-AWS') {
                         def ec2Id = sh(script: 'terraform output -raw instance_id', returnStdout: true).trim()
-                        def ec2Ip = sh(script: 'terraform output -raw instance_public_ip', returnStdout: true).trim()
+                        def ec2Ip = sh(script: 'terraform output -raw public_ip', returnStdout: true).trim()
                         echo "ID de la instancia EC2: ${ec2Id}"
                         echo "IP de la instancia EC2: ${ec2Ip}"
                         env.EC2_HOST = ec2Ip
