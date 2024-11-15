@@ -148,39 +148,31 @@ pipeline {
             }
         }
 
-        stage('Verificar recursos a eliminar') {
+       stage('Verificar recursos a eliminar') {
             steps {
                 script {
-                    echo "\033[33mVerificando si existen recursos a eliminar...\033[0m"
-                    dir('Pipeline-AplicativoGestion-AWS') {
-                        if (fileExists('tfplan')) {
-                            try {
-                                def planOutput = sh(script: 'terraform state list', returnStdout: true).trim()
-                                if (planOutput) {
-                                    echo "\033[31mSe detectaron recursos a eliminar. Ejecutando terraform destroy...\033[0m"
-                                    sh 'terraform destroy -auto-approve'
-                                    currentBuild.result = 'SUCCESS'
-                                    return
-                                } else {
-                                    echo "\033[32mNo se detectaron recursos a eliminar. Continuando con terraform apply...\033[0m"
-                                }
-                            } catch (Exception e) {
-                                echo "\033[31mError al leer el archivo tfplan: ${e.message}\033[0m"
-                                // No marcar el build como FAILURE aquí
-                            }
-                        } else {
-                            echo "\033[31mEl archivo 'tfplan' no existe. Por favor, asegúrese de ejecutar el plan primero.\033[0m"
-                        }
+                    ansiColor('xterm') {
+                        echo "\033[33mVerificando si existen recursos a eliminar...\033[0m"
+                    }
+                    // Ejecuta 'terraform state list' para verificar si hay recursos
+                    def planOutput = sh(script: 'terraform state list', returnStdout: true).trim()
+                    if (planOutput) {
+                        echo "Recursos existentes encontrados, procediendo con la destrucción."
+                        sh 'terraform destroy -auto-approve'
+                        currentBuild.result = 'SUCCESS'
+                        return  // Termina la ejecución del pipeline después de destruir
+                        error("Pipeline terminado después de destruir los recursos.")
+                    } else {
+                        echo "No se encontraron recursos existentes. Continuando con la creación."
                     }
                 }
             }
         }
 
+
         stage('Generar plan de Terraform') {
             when {
-                not {
-                    expression { fileExists('tfplan') }
-                }
+                expression { currentBuild.result != 'SUCCESS' }
             }
             steps {
                 withCredentials([[ $class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS_CREDENTIALS' ]]) {
@@ -202,7 +194,7 @@ pipeline {
 
         stage('Aplicar plan de Terraform') {
             when {
-                expression { fileExists('tfplan') }
+                expression { currentBuild.result != 'SUCCESS' }
             }
             steps {
                 echo "\033[32mAplicando cambios con terraform apply...\033[0m"
