@@ -202,8 +202,20 @@ pipeline {
                 }
             }
         }
+
+        stage('Obtener ID de EC2') {
+            steps {
+                echo "\u001B[34mObteniendo ID de la instancia EC2...\u001B[0m"
+                script {
+                    dir('Pipeline-AplicativoGestion-AWS') {
+                        def ec2Id = sh(script: 'terraform output -raw instance_id', returnStdout: true).trim()
+                        echo "ID de la instancia EC2: ${ec2Id}"
+                    }
+                }
+            }
+        }
     }
-    
+
     post {
         always {
             echo "\033[1mPipeline finalizado\033[0m"
