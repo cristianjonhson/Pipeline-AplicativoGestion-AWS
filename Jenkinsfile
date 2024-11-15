@@ -7,7 +7,6 @@ pipeline {
         JAVA_HOME = tool 'jdk 17'
         PATH = "${MAVEN_HOME}/bin:${JAVA_HOME}/bin:${env.PATH}"
 
-        // Docker environment
         NETWORK_NAME = 'gestion_eventos_network'
         PG_CONTAINER = 'pg_container'
         APP_IMAGE = 'gestion_eventos_app_image'
@@ -173,7 +172,6 @@ pipeline {
                         } else {
                             echo "\033[31mEl archivo 'tfplan' no existe. Por favor, asegúrese de ejecutar el plan primero.\033[0m"
                             currentBuild.result = 'FAILURE'
-                            return
                         }
                     }
                 }
@@ -206,7 +204,7 @@ pipeline {
 
         stage('Aplicar plan de Terraform') {
             when {
-                expression { fileExists('tfplan') && currentBuild.result != 'SUCCESS' }
+                expression { fileExists('tfplan') }
             }
             steps {
                 echo "\033[32mAplicando cambios con terraform apply...\033[0m"
