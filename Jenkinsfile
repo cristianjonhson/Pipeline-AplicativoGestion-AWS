@@ -182,7 +182,9 @@ pipeline {
 
         stage('Generar plan de Terraform') {
             when {
-                expression { fileExists('tfplan') && currentBuild.result != 'SUCCESS' }
+                not {
+                    expression { fileExists('tfplan') }
+                }
             }
             steps {
                 withCredentials([[ $class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS_CREDENTIALS' ]]) {
