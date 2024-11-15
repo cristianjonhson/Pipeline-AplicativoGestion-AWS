@@ -11,11 +11,11 @@ pipeline {
         APP_IMAGE = 'gestion_eventos_app_image'
         APP_CONTAINER = 'gestion_eventos_app'
         POSTGRES_USER = 'postgres'
-        POSTGRES_PASSWORD = 'admin'
+        POSTGRES_PASSWORD = credentials('postgres-password')
         POSTGRES_DB = 'gestion_eventos'
         SPRING_DATASOURCE_URL = "jdbc:postgresql://pg_container:5432/gestion_eventos"
         SPRING_DATASOURCE_USERNAME = 'postgres'
-        SPRING_DATASOURCE_PASSWORD = 'admin'
+        SPRING_DATASOURCE_PASSWORD = credentials('postgres-password')
         SPRING_DATASOURCE_DRIVER_CLASS_NAME = 'org.postgresql.Driver'
         SPRING_JPA_DATABASE_PLATFORM = 'org.hibernate.dialect.PostgreSQLDialect'
         SERVER_PORT = '8082'
@@ -235,12 +235,12 @@ def configureGit() {
 }
 
 def manageContainer(containerName, imageName, options) {
-    sh '''
-        if [ "$(docker ps -a -q -f name=${containerName})" ]; then
+    sh """
+        if [ "\$(docker ps -a -q -f name=${containerName})" ]; then
             docker rm -f ${containerName}
         fi
         docker run -d --name ${containerName} --network ${NETWORK_NAME} ${options.join(' ')} ${imageName}
-    '''
+    """
 }
 
 def executeSQLCommands() {
