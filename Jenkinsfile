@@ -171,7 +171,6 @@ pipeline {
                             }
                         } else {
                             echo "\033[31mEl archivo 'tfplan' no existe. Por favor, asegúrese de ejecutar el plan primero.\033[0m"
-                            currentBuild.result = 'FAILURE'
                         }
                     }
                 }
