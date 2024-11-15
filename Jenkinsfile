@@ -207,7 +207,7 @@ pipeline {
 
         stage('Aplicar plan de Terraform') {
             when {
-                expression { fileExists('Pipeline-AplicativoGestion-AWS/tfplan') && currentBuild.result != 'SUCCESS' }
+                expression { currentBuild.result != 'SUCCESS' }
             }
             steps {
                 echo "\033[32mAplicando cambios con terraform apply...\033[0m"
