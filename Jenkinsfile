@@ -148,7 +148,6 @@ pipeline {
             }
         }
 
-        stages {
             stage('Inicializar Terraform') {
                 steps {
                     dir('Pipeline-AplicativoGestion-AWS') {
@@ -220,6 +219,7 @@ pipeline {
             }
         }
     }
+    
     post {
         always {
             echo "\033[1mPipeline finalizado\033[0m"
@@ -231,7 +231,7 @@ pipeline {
             echo "\033[31mPipeline falló. Revisar los logs.\033[0m"
         }
     }
-}
+
 
 def configureGit() {
     sh '''
