@@ -2,28 +2,32 @@ pipeline {
     agent any
     
     environment {
+        // Maven and JDK tools defined in Jenkins
         MAVEN_HOME = tool 'apache-maven-3.9.8'
         JAVA_HOME = tool 'jdk 17'
         PATH = "${MAVEN_HOME}/bin:${JAVA_HOME}/bin:${env.PATH}"
 
+        // Docker environment
         NETWORK_NAME = 'gestion_eventos_network'
         PG_CONTAINER = 'pg_container'
         APP_IMAGE = 'gestion_eventos_app_image'
         APP_CONTAINER = 'gestion_eventos_app'
         POSTGRES_USER = 'postgres'
-        POSTGRES_PASSWORD = credentials('postgres-password')
+        POSTGRES_PASSWORD = 'admin'
         POSTGRES_DB = 'gestion_eventos'
         SPRING_DATASOURCE_URL = "jdbc:postgresql://pg_container:5432/gestion_eventos"
         SPRING_DATASOURCE_USERNAME = 'postgres'
-        SPRING_DATASOURCE_PASSWORD = credentials('postgres-password')
+        SPRING_DATASOURCE_PASSWORD = 'admin'
         SPRING_DATASOURCE_DRIVER_CLASS_NAME = 'org.postgresql.Driver'
         SPRING_JPA_DATABASE_PLATFORM = 'org.hibernate.dialect.PostgreSQLDialect'
         SERVER_PORT = '8082'
         SPRING_APPLICATION_NAME = 'G2-GestionEventos'
-
+        
+        // Define el SonarQube Server a utilizar
         SONARQUBE_URL = 'http://localhost:9000'
         scannerHome = tool 'SonarQubeScanner'
 
+        //terraform
         TF_VAR_aws_region = 'us-east-1'
         GITHUB_TOKEN = credentials('github-token')
         AWS_CREDENTIALS = credentials('AWS_CREDENTIALS')
