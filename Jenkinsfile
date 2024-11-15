@@ -183,41 +183,27 @@ pipeline {
             }
         }
 
-        stage('Generar plan de Terraform') {
+        stage('Generar y aplicar plan de Terraform') {
             when {
-                expression { !fileExists('Pipeline-AplicativoGestion-AWS/tfplan') && currentBuild.result != 'SUCCESS' }
+                expression { currentBuild.result != 'SUCCESS' }
             }
             steps {
                 withCredentials([[ $class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS_CREDENTIALS' ]]) {
-                    script {
-                        echo "\033[33mEjecutando terraform plan...\033[0m"
-                        dir('Pipeline-AplicativoGestion-AWS') {
-                            if (!fileExists(".terraform")) {
-                                echo "\033[33mInicializando Terraform por primera vez...\033[0m"
-                                sh 'terraform init -input=false'
-                            }
+                    dir('Pipeline-AplicativoGestion-AWS') {
+                        script {
                             echo "\033[33mGenerando el archivo 'tfplan'...\033[0m"
                             sh 'terraform plan -out=tfplan'
                             echo "\033[32mPlan de Terraform generado con éxito...\033[0m"
+                            echo "\033[32mAplicando cambios con terraform apply...\033[0m"
+                            sh 'terraform apply -auto-approve tfplan'
+                            echo "\033[32mCambios aplicados exitosamente.\033[0m"
                         }
                     }
                 }
             }
         }
-
-        stage('Aplicar plan de Terraform') {
-            when {
-                expression { currentBuild.result != 'SUCCESS' }
-            }
-            steps {
-                echo "\033[32mAplicando cambios con terraform apply...\033[0m"
-                dir('Pipeline-AplicativoGestion-AWS') {
-                    sh 'terraform apply -auto-approve tfplan'
-                }
-            }
-        }
-
     }
+    
     post {
         always {
             echo "\033[1mPipeline finalizado\033[0m"
