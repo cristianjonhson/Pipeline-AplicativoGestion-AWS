@@ -148,58 +148,74 @@ pipeline {
             }
         }
 
-       stage('Verificar recursos a eliminar') {
-            steps {
-                script {
-                    ansiColor('xterm') {
-                        echo "\033[33mVerificando si existen recursos a eliminar...\033[0m"
-                    }
-                    // Ejecuta 'terraform state list' para verificar si hay recursos
-                    def planOutput = sh(script: 'terraform state list', returnStdout: true).trim()
-                    if (planOutput) {
-                        echo "Recursos existentes encontrados, procediendo con la destrucción."
-                        sh 'terraform destroy -auto-approve'
-                        currentBuild.result = 'SUCCESS'
-                        return  // Termina la ejecución del pipeline después de destruir
-                        error("Pipeline terminado después de destruir los recursos.")
-                    } else {
-                        echo "No se encontraron recursos existentes. Continuando con la creación."
-                    }
-                }
-            }
-        }
-
-
-        stage('Generar plan de Terraform') {
-            when {
-                expression { currentBuild.result != 'SUCCESS' }
-            }
-            steps {
-                withCredentials([[ $class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS_CREDENTIALS' ]]) {
-                    script {
-                        echo "\033[33mEjecutando terraform plan...\033[0m"
-                        dir('Pipeline-AplicativoGestion-AWS') {
-                            if (!fileExists(".terraform")) {
-                                echo "\033[33mInicializando Terraform por primera vez...\033[0m"
-                                sh 'terraform init -input=false'
-                            }
-                            echo "\033[33mGenerando el archivo 'tfplan'...\033[0m"
-                            sh 'terraform plan -out=tfplan'
-                            echo "\033[32mPlan de Terraform generado con éxito...\033[0m"
+        stages {
+            stage('Inicializar Terraform') {
+                steps {
+                    dir('Pipeline-AplicativoGestion-AWS') {
+                        script {
+                            echo "\033[33mInicializando Terraform...\033[0m"
+                            sh 'terraform init -input=false'
+                            echo "\033[32mInicialización completada.\033[0m"
                         }
                     }
                 }
             }
-        }
 
-        stage('Aplicar plan de Terraform') {
-            when {
-                expression { currentBuild.result != 'SUCCESS' }
+            stage('Verificar recursos a eliminar') {
+                steps {
+                    script {
+                        ansiColor('xterm') {
+                            echo "\033[33mVerificando si existen recursos a eliminar...\033[0m"
+                        }
+
+                        // Ejecuta 'terraform state list' para verificar si hay recursos
+                        def planOutput = sh(script: 'terraform state list', returnStdout: true).trim()
+
+                        if (planOutput) {
+                            echo "Recursos existentes encontrados, procediendo con la destrucción."
+                            sh 'terraform destroy -auto-approve'
+                            currentBuild.result = 'SUCCESS'
+                            error("Pipeline terminado después de destruir los recursos.")
+                        } else {
+                            echo "No se encontraron recursos existentes. Continuando con la creación."
+                        }
+                    }
+                }
             }
-            steps {
-                echo "\033[32mAplicando cambios con terraform apply...\033[0m"
-                dir('Pipeline-AplicativoGestion-AWS') {
-                    sh 'terraform apply -auto-approve tfplan'
+
+            stage('Generar plan de Terraform') {
+                when {
+                    expression { currentBuild.result != 'SUCCESS' }
+                }
+                steps {
+                    withCredentials([[ $class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS_CREDENTIALS' ]]) {
+                        script {
+                            echo "\033[33mEjecutando terraform plan...\033[0m"
+                            dir('Pipeline-AplicativoGestion-AWS') {
+                                echo "\033[33mGenerando el archivo 'tfplan'...\033[0m"
+                                sh 'terraform plan -out=tfplan'
+                                echo "\033[32mPlan de Terraform generado con éxito.\033[0m"
+                            }
+                        }
+                    }
+                }
+            }
+
+            stage('Aplicar plan de Terraform') {
+                when {
+                    expression { currentBuild.result != 'SUCCESS' }
+                }
+                steps {
+                    echo "\033[32mAplicando cambios con terraform apply...\033[0m"
+                    dir('Pipeline-AplicativoGestion-AWS') {
+                        script {
+                            if (fileExists('tfplan')) {
+                                sh 'terraform apply -auto-approve tfplan'
+                            } else {
+                                error("Archivo 'tfplan' no encontrado. Asegúrese de ejecutar el plan primero.")
+                            }
+                        }
+                    }
                 }
             }
         }
