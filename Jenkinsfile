@@ -225,23 +225,34 @@ pipeline {
         }
 
         stage('Verificar tamaño de contenedores') {
+            when {
+                expression { currentBuild.result != 'SUCCESS' }
+            }
             steps {
                 echo "\u001B[34mVerificando tamaño de los contenedores Docker...\u001B[0m"
                 script {
-                    def pgContainerSize = sh(script: "docker inspect --format='{{.SizeRootFs}}' ${PG_CONTAINER}", returnStdout: true).trim().toLong()
-                    def appContainerSize = sh(script: "docker inspect --format='{{.SizeRootFs}}' ${APP_CONTAINER}", returnStdout: true).trim().toLong()
-                    echo "Tamaño del contenedor PostgreSQL: ${pgContainerSize} bytes"
-                    echo "Tamaño del contenedor de la aplicación: ${appContainerSize} bytes"
+                    def pgContainerSize = sh(script: "docker inspect --format='{{.SizeRootFs}}' ${PG_CONTAINER}", returnStdout: true).trim()
+                    def appContainerSize = sh(script: "docker inspect --format='{{.SizeRootFs}}' ${APP_CONTAINER}", returnStdout: true).trim()
+
+                    if (pgContainerSize == "<nil>" || appContainerSize == "<nil>") {
+                        error("No se pudo obtener el tamaño de uno o más contenedores.")
+                    }
+
+                    def pgContainerSizeLong = pgContainerSize.toLong()
+                    def appContainerSizeLong = appContainerSize.toLong()
+
+                    echo "Tamaño del contenedor PostgreSQL: ${pgContainerSizeLong} bytes"
+                    echo "Tamaño del contenedor de la aplicación: ${appContainerSizeLong} bytes"
 
                     // Obtener la capacidad de almacenamiento de la instancia EC2
                     def ec2StorageSize = sh(script: """
-                        aws ec2 describe-instances --instance-ids ${ec2Id} --query 'Reservations[*].Instances[*].BlockDeviceMappings[*].Ebs.VolumeSize' --output text
+                        aws ec2 describe-instances --instance-ids ${env.EC2_ID} --query 'Reservations[*].Instances[*].BlockDeviceMappings[*].Ebs.VolumeSize' --output text
                     """, returnStdout: true).trim().toLong() * 1024 * 1024 * 1024 // Convertir de GB a bytes
 
                     echo "Capacidad de almacenamiento de la instancia EC2: ${ec2StorageSize} bytes"
 
                     // Verificar si los tamaños de los contenedores son compatibles con la capacidad de almacenamiento de la instancia EC2
-                    def totalContainerSize = pgContainerSize + appContainerSize
+                    def totalContainerSize = pgContainerSizeLong + appContainerSizeLong
                     if (totalContainerSize > ec2StorageSize) {
                         error("El tamaño total de los contenedores (${totalContainerSize} bytes) excede la capacidad de almacenamiento de la instancia EC2 (${ec2StorageSize} bytes).")
                     } else {
