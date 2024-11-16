@@ -3,9 +3,9 @@ pipeline {
     
     environment {
         // Maven and JDK tools defined in Jenkins
-       // MAVEN_HOME = tool 'apache-maven-3.9.8'
-        //JAVA_HOME = tool 'jdk 17'
-        //PATH = "${MAVEN_HOME}/bin:${JAVA_HOME}/bin:${env.PATH}"
+        MAVEN_HOME = tool 'apache-maven-3.9.8'
+        JAVA_HOME = tool 'jdk 17'
+        PATH = "${MAVEN_HOME}/bin:${JAVA_HOME}/bin:${env.PATH}"
 
         NETWORK_NAME = 'gestion_eventos_network'
         PG_CONTAINER = 'pg_container'
@@ -64,12 +64,6 @@ pipeline {
         }
 
         stage('Build Project with Maven') {
-            agent {
-                docker {
-                    image 'maven:3.9.9-eclipse-temurin-11-alpine'  // Maven + Java 11 (Alpine)
-                    label 'docker'
-                }
-            }
             steps {
                 echo "\033[32mConstruyendo proyecto con Maven (slim)...\033[0m"
                 script {
@@ -79,12 +73,6 @@ pipeline {
         }
 
         stage('Run Unit Tests') {
-            agent {
-                docker {
-                    image 'maven:3.9.9-eclipse-temurin-11-alpine'  // Maven + Java 11 (Alpine)
-                    label 'docker'
-                }
-            }
             steps {
                 echo "\033[34mCorriendo pruebas unitarias...\033[0m"
                 script {
