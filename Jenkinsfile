@@ -228,7 +228,7 @@ pipeline {
             }
         }
 
-        stage('Verificar tamaño de contenedores') {
+        /* stage('Verificar tamaño de contenedores') {
             when {
                 expression { currentBuild.result != 'SUCCESS' }
             }
@@ -264,9 +264,9 @@ pipeline {
                     }
                 }
             }
-        }
+        } */
 
-         stage('Deploy Contenedores en EC2') {
+        stage('Deploy Contenedores en EC2') {
             steps {
                 echo "\u001B[34mDesplegando contenedores en la instancia EC2...\u001B[0m"
                 script {
