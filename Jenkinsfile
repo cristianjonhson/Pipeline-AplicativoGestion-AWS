@@ -3,9 +3,9 @@ pipeline {
     
     environment {
         // Maven and JDK tools defined in Jenkins
-        MAVEN_HOME = tool 'apache-maven-3.9.8'
-        JAVA_HOME = tool 'jdk 17'
-        PATH = "${MAVEN_HOME}/bin:${JAVA_HOME}/bin:${env.PATH}"
+       // MAVEN_HOME = tool 'apache-maven-3.9.8'
+        //JAVA_HOME = tool 'jdk 17'
+        //PATH = "${MAVEN_HOME}/bin:${JAVA_HOME}/bin:${env.PATH}"
 
         NETWORK_NAME = 'gestion_eventos_network'
         PG_CONTAINER = 'pg_container'
@@ -65,15 +65,23 @@ pipeline {
 
         stage('Build Project with Maven') {
             steps {
-                echo "\u001B[32mConstruyendo proyecto con Maven...\u001B[0m"
-                sh 'mvn -f pom.xml clean install'
+                echo "\033[32mConstruyendo proyecto con Maven (slim)...\033[0m"
+                script {
+                    docker.image('maven:3.9.6-eclipse-temurin-17-slim').inside {
+                        sh 'mvn -f pom.xml clean install'
+                    }
+                }
             }
         }
 
         stage('Run Unit Tests') {
             steps {
-                echo "\u001B[34mCorriendo pruebas unitarias...\u001B[0m"
-                sh 'mvn -f pom.xml test'
+                echo "\033[34mCorriendo pruebas unitarias...\033[0m"
+                script {
+                    docker.image('maven:3.9.6-eclipse-temurin-17-slim').inside {
+                        sh 'mvn -f pom.xml test'
+                    }
+                }
             }
             post {
                 always {
@@ -96,7 +104,7 @@ pipeline {
             steps {
                 echo "\u001B[35mStarting PostgreSQL Container...\u001B[0m"
                 script {
-                    manageContainer(PG_CONTAINER, 'postgres:latest', [
+                    manageContainer(PG_CONTAINER, 'postgres:15-alpine', [
                         "-e POSTGRES_USER=${POSTGRES_USER}",
                         "-e POSTGRES_PASSWORD=${POSTGRES_PASSWORD}",
                         "-e POSTGRES_DB=${POSTGRES_DB}",
