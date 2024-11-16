@@ -67,7 +67,7 @@ pipeline {
             steps {
                 echo "\033[32mConstruyendo proyecto con Maven (slim)...\033[0m"
                 script {
-                    docker.image('mmaven:3.9.6-alpine').inside {
+                    docker.image('maven:3.9.6-alpine').inside {
                         sh 'mvn -f pom.xml clean install'
                     }
                 }
@@ -78,7 +78,7 @@ pipeline {
             steps {
                 echo "\033[34mCorriendo pruebas unitarias...\033[0m"
                 script {
-                    docker.image('mmaven:3.9.6-alpine').inside {
+                    docker.image('maven:3.9.6-alpine').inside {
                         sh 'mvn -f pom.xml test'
                     }
                 }
