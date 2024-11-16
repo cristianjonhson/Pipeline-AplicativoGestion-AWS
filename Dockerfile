@@ -1,5 +1,5 @@
 # Usar una imagen base de Maven para la construcción
-FROM maven:3.9.6-eclipse-temurin-17-slim AS builder
+FROM maven:3.9.6 AS builder
 
 # Establecer el directorio de trabajo dentro del contenedor
 WORKDIR /app
