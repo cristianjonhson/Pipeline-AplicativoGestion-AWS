@@ -223,6 +223,50 @@ pipeline {
                 }
             }
         }
+
+        stage('Verificar tamaño de contenedores') {
+            steps {
+                echo "\u001B[34mVerificando tamaño de los contenedores Docker...\u001B[0m"
+                script {
+                    def pgContainerSize = sh(script: "docker inspect --format='{{.SizeRootFs}}' ${PG_CONTAINER}", returnStdout: true).trim().toLong()
+                    def appContainerSize = sh(script: "docker inspect --format='{{.SizeRootFs}}' ${APP_CONTAINER}", returnStdout: true).trim().toLong()
+                    echo "Tamaño del contenedor PostgreSQL: ${pgContainerSize} bytes"
+                    echo "Tamaño del contenedor de la aplicación: ${appContainerSize} bytes"
+
+                    // Obtener la capacidad de almacenamiento de la instancia EC2
+                    def ec2StorageSize = sh(script: """
+                        aws ec2 describe-instances --instance-ids ${ec2Id} --query 'Reservations[*].Instances[*].BlockDeviceMappings[*].Ebs.VolumeSize' --output text
+                    """, returnStdout: true).trim().toLong() * 1024 * 1024 * 1024 // Convertir de GB a bytes
+
+                    echo "Capacidad de almacenamiento de la instancia EC2: ${ec2StorageSize} bytes"
+
+                    // Verificar si los tamaños de los contenedores son compatibles con la capacidad de almacenamiento de la instancia EC2
+                    def totalContainerSize = pgContainerSize + appContainerSize
+                    if (totalContainerSize > ec2StorageSize) {
+                        error("El tamaño total de los contenedores (${totalContainerSize} bytes) excede la capacidad de almacenamiento de la instancia EC2 (${ec2StorageSize} bytes).")
+                    } else {
+                        echo "El tamaño total de los contenedores (${totalContainerSize} bytes) es compatible con la capacidad de almacenamiento de la instancia EC2 (${ec2StorageSize} bytes)."
+                    }
+                }
+            }
+        }
+
+        /* stage('Deploy Contenedores en EC2') {
+            steps {
+                echo "\u001B[34mDesplegando contenedores en la instancia EC2...\u001B[0m"
+                script {
+                    withCredentials([sshUserPrivateKey(credentialsId: SSH_CREDENTIALS_ID, keyFileVariable: 'SSH_KEY')]) {
+                        sh """
+                            ssh -o StrictHostKeyChecking=no -i ${SSH_KEY} ${EC2_USER}@${EC2_HOST} << EOF
+                            docker network create ${NETWORK_NAME} || echo "Red ya existente"
+                            docker run -d --name ${PG_CONTAINER} --network ${NETWORK_NAME} -e POSTGRES_USER=${POSTGRES_USER} -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} -e POSTGRES_DB=${POSTGRES_DB} -p 5432:5432 postgres:latest
+                            docker run -d --name ${APP_CONTAINER} --network ${NETWORK_NAME} -e SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL} -e SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME} -e SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD} -e SPRING_DATASOURCE_DRIVER_CLASS_NAME=${SPRING_DATASOURCE_DRIVER_CLASS_NAME} -e SPRING_JPA_DATABASE_PLATFORM=${SPRING_JPA_DATABASE_PLATFORM} -e SERVER_PORT=${SERVER_PORT} -e SPRING_APPLICATION_NAME=${SPRING_APPLICATION_NAME} -p ${SERVER_PORT}:${SERVER_PORT} ${APP_IMAGE}
+                            EOF
+                        """
+                    }
+                }
+            }
+        } */
     }
 
     post {
