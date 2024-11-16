@@ -64,23 +64,31 @@ pipeline {
         }
 
         stage('Build Project with Maven') {
+            agent {
+                docker {
+                    image 'maven:3.9.9-eclipse-temurin-11-alpine'  // Maven + Java 11 (Alpine)
+                    label 'docker'
+                }
+            }
             steps {
                 echo "\033[32mConstruyendo proyecto con Maven (slim)...\033[0m"
                 script {
-                    docker.image('maven:3.9.6-alpine').inside {
                         sh 'mvn -f pom.xml clean install'
-                    }
                 }
             }
         }
 
         stage('Run Unit Tests') {
+            agent {
+                docker {
+                    image 'maven:3.9.9-eclipse-temurin-11-alpine'  // Maven + Java 11 (Alpine)
+                    label 'docker'
+                }
+            }
             steps {
                 echo "\033[34mCorriendo pruebas unitarias...\033[0m"
                 script {
-                    docker.image('maven:3.9.6-alpine').inside {
                         sh 'mvn -f pom.xml test'
-                    }
                 }
             }
             post {
